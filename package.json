@@ -16,5 +16,8 @@
     "url": "https://github.com/Yassin-Kassem/Online-Ticketing-App/issues"
   },
   "homepage": "https://github.com/Yassin-Kassem/Online-Ticketing-App#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
