@@ -13,5 +13,8 @@ const eventSchema = new mongoose.Schema({
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   createdAt: { type: Date, default: Date.now },
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> a30e411512d9e5be1a57ac358e74b6342929cf6d
 module.exports = mongoose.model('Event', eventSchema);
