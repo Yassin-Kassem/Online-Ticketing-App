@@ -18,4 +18,15 @@ const bookingSchema = new Schema(
         required: true,
         min: 1,
     },
-  });
+    status: {
+      type: String,
+      enum: ['pending', 'confirmed', 'canceled'],
+      default: 'pending',
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { timestamps: true }
+);
