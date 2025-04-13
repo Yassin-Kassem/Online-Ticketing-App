@@ -1,9 +1,9 @@
-const User = require('../models/User');
+const User = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
 
 // Register a new user
 exports.register = async (req, res) => {
-  const { email, password, name, role } = req.body;
+  const { name, email, password, profilePicture, role } = req.body;
 
   try {
     // Check if email is already taken
@@ -13,7 +13,7 @@ exports.register = async (req, res) => {
     }
 
     // Validate role (optional, defaults to 'user')
-    const validRoles = ['user', 'organizer', 'admin'];
+    const validRoles = ['Standard User', 'Organizer', 'System Admin'];
     const userRole = validRoles.includes(role) ? role : 'user';
 
     // Create new user
@@ -21,6 +21,7 @@ exports.register = async (req, res) => {
       email,
       password,
       name,
+      profilePicture: profilePicture || 'default-profile-picture.png', 
       role: userRole,
     });
 
