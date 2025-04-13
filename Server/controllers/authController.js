@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
       email,
       password,
       name,
-      profilePicture: profilePicture || 'default-profile-picture.png', 
+      profilePicture: profilePicture || 'default-profile-picture.png',
       role: userRole,
     });
 
