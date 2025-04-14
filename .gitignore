@@ -87,3 +87,6 @@ coverage/
 /sessions/
 /uploads/
 /tmp/
+
+# rest
+/request
