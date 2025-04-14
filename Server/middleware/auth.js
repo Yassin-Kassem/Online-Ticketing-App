@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-exports.auth = async (req, res, next) => {
+const auth = async (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {
@@ -16,7 +16,7 @@ exports.auth = async (req, res, next) => {
   }
 };
 
-exports.restrictTo = (...roles) => {
+ const restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({ msg: 'You do not have permission to perform this action' });
@@ -24,3 +24,5 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
+
+module.exports = { auth, restrictTo };
