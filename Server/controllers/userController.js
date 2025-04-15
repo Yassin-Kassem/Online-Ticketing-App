@@ -14,7 +14,6 @@ const registerUser = async(req, res, next) =>{
         const {password, ...rest} = req.body;
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        
         // check if user already exists
         const userExists = await User.findOne({email: req.body.email});
         if(userExists){
@@ -49,8 +48,8 @@ const loginUser = async(req, res, next) =>{
             throw new Error("user not found");
         }
         //compare password
-        console.log("Stored Hashed Password:", user.password);
-        console.log("Plain Password:", password);
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         const isCorrect = await bcrypt.compare(password, user.password);
         console.log("Password Match Result:", isCorrect);
         if(!isCorrect){
@@ -59,7 +58,7 @@ const loginUser = async(req, res, next) =>{
         }
         //generate token
         //set cookie
-        return res.status(200).json(...otherData);
+        return res.status(200).json("user validated");
     } catch (error) {
         next(error);
     }

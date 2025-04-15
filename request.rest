@@ -1,3 +1,25 @@
 # get all users
 ###
 GET http://localhost:5000/api/v1/users
+
+# register user
+###
+POST http://localhost:5000/api/v1/users/register
+Content-Type: application/json
+
+{
+    "name": "Yassin Kassem",
+    "email": "yassin50@example.com",
+    "password": "password"
+}
+
+# login user
+###
+POST http://localhost:5000/api/v1/users/login
+Content-Type: application/json
+
+{
+    "email": "yassin46@example.com",
+    "password": "password"
+}
+
