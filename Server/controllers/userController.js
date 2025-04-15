@@ -2,11 +2,20 @@ const { get } = require('mongoose');
 const User = require('../models/UserModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
 
 const getAllUsers = async(req, res, next) =>{
-    return res.json({ message: "get all users"});
-
+    try {
+        const users = await User.find();
+        if(!users){
+            res.status(400);
+            throw new error("No available Users")
+        }
+        return res.status(200).json(users); 
+    } catch (error) {
+        next(error);
+    }
 }
 
 const registerUser = async(req, res, next) =>{
@@ -58,11 +67,23 @@ const loginUser = async(req, res, next) =>{
         }
         //generate token
         //set cookie
-        return res.status(200).json("user validated");
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET)
+        res.cookie("jwt", token);
+
+        const { password: userPassword, ...rest } = user._doc;
+        return res.status(200).json({
+            message: "Login successful",
+            ...rest,
+        });
     } catch (error) {
         next(error);
     }
 
+}
+
+const LogoutUser = async(req, res, next) => {
+    res.cookie("jwt", "", {expiresIn: "-1"});
+    return res.json({message: "youve been logged out successfully"});
 }
 
 
@@ -70,4 +91,5 @@ const loginUser = async(req, res, next) =>{
     getAllUsers,
     registerUser,
     loginUser,
+    LogoutUser,
   }

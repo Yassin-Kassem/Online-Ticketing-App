@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "name": "Yassin Kassem",
-    "email": "yassin50@example.com",
+    "email": "yassin63@example.com",
     "password": "password"
 }
 
@@ -19,7 +19,15 @@ POST http://localhost:5000/api/v1/users/login
 Content-Type: application/json
 
 {
-    "email": "yassin46@example.com",
+    "email": "yassin63@example.com",
     "password": "password"
 }
 
+
+# Auth 
+###
+GET http://localhost:5000/api/v1/auth
+
+# Logout
+###
+GET http://localhost:5000/api/v1/user/logout

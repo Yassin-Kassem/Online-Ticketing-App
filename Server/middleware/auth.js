@@ -1,28 +1,28 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/UserModel');
 
-const auth = async (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
-
-  if (!token) {
-    return res.status(401).json({ msg: 'No token, authorization denied' });
-  }
-
+const auth = async(req, res, next) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; 
-    next();
-  } catch (err) {
-    res.status(401).json({ msg: 'Invalid token' });
+      const token = req.cookies.jwt;
+      if(!token){
+        return res.status(401).json({message: "Not Authorized"});
+      }
+
+      //verify token
+      const data = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(data.id);
+      if(!user){
+        res.status(400).json({message: "user not found"});
+      }
+      req.user = user;
+      next();
+  } catch (error) {
+      console.log(error.message);
+      res.status(400).json({message: "no token provided"});
   }
-};
+}
 
- const restrictTo = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ msg: 'You do not have permission to perform this action' });
-    }
-    next();
-  };
-};
 
-module.exports = { auth, restrictTo };
+module.exports = {
+  auth,
+};
