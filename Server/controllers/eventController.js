@@ -68,23 +68,31 @@ const getDetailsOfEvent = async(req, res, next) =>{
         next(error);
     }
 }
-const updateEvent = async(req, res,next) =>{
+const updateEvent = async (req, res, next) => {
     try {
-        const event = await Event.findByIdAndUpdate(req.params.id, 
-            {date:req.body.date},
-            {totalTicketsAvailable:req.body.totalTicketsAvailable},
-            {location:req.body.location},
-            {new:true,runValidators:true},
-        )
-        if(!event){
-            res.status(400);
-            throw new Error("event not found");
-        }
-        return res.status(200).json(event);
+      // Combine all fields to be updated into a single object
+      const updateData = {
+        date: req.body.date,
+        location: req.body.location,
+        totalTicketsAvailable: req.body.totalTicketsAvailable,
+      };
+  
+      // Use findByIdAndUpdate with the combined update object
+      const event = await Event.findByIdAndUpdate(
+        req.params.id,
+        updateData,
+        { new: true, runValidators: true }
+      );
+  
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      return res.status(200).json(event);
     } catch (error) {
-        next(error);
+      next(error);
     }
-}
+  };
 const deleteEvent = async(req, res, next) =>{
         try {
             const event = await Event.findByIdAndDelete(req.params.id);
