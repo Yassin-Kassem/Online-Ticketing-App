@@ -41,3 +41,20 @@ Content-Type: application/json
     "email": "yassin63@example.com",
     "newPassword": "password123"
 }
+
+# get user by id
+###
+GET http://localhost:5000/api/v1/users/67fd6b50ab7843d3f6ce13c7
+
+# update user role
+###
+PUT http://localhost:5000/api/v1/users/67fd6b50ab7843d3f6ce13c7
+Content-Type: application/json
+
+{
+    "role" : "System Admin" 
+}
+
+# delete user
+###
+DELETE http://localhost:5000/api/v1/users/67fd68fd0663cf235ad9e697
