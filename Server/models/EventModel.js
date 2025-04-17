@@ -17,7 +17,7 @@ const eventSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["approved", "pending", "declined"],
-    default: 'Standard User',
+    default: 'pending',
   },
 });
 
