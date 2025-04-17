@@ -4,7 +4,7 @@ const { auth } = require('../middleware/auth');
 const { validateRole, authoriseOnly } = require('../middleware/authorisationMiddleware');
 const router = express.Router();
 
-router.get("/", auth, authoriseOnly(['System Admin']),  getAllUsers);
+router.get("/", auth, /*authoriseOnly(['System Admin']),*/  getAllUsers);
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/logout', auth, LogoutUser);

@@ -8,8 +8,8 @@ POST http://localhost:5000/api/v1/users/register
 Content-Type: application/json
 
 {
-    "name": "Yassin Kassem",
-    "email": "yassin63@example.com",
+    "name": "malek khaled",
+    "email": "malooka@example.com",
     "password": "password"
 }
 
@@ -19,8 +19,8 @@ POST http://localhost:5000/api/v1/users/login
 Content-Type: application/json
 
 {
-    "email": "yassin63@example.com",
-    "password": "password123"
+    "email": "malooka@example.com",
+    "password": "password"
 }
 
 
@@ -38,7 +38,7 @@ POST http://localhost:5000/api/v1/users/forgetPassword
 Content-Type: application/json
 
 {
-    "email": "yassin63@example.com",
+    "email": "malooka@example.com",
     "newPassword": "password123"
 }
 
@@ -58,3 +58,27 @@ Content-Type: application/json
 # delete user
 ###
 DELETE http://localhost:5000/api/v1/users/67fd68fd0663cf235ad9e697
+
+# create event
+###
+POST http://localhost:5000/api/v1/events
+Content-Type: application/json
+
+{
+  "title": "Summer Music Festival",
+  "description": "Open air music festival with multiple stages",
+  "date": "2025-07-20T16:00:00Z",
+  "location": "Central Park, New York",
+  "category": "concert",
+  "ticketPricing": 129.50,
+  "totalTicketsAvailable": 10000,
+  "remainingTickets": 10000
+}
+
+# get all events
+###
+GET http://localhost:5000/api/v1/events
+
+# delete event
+###
+DELETE http://localhost:5000/api/v1/events/68011d7b6db61dfd4f380ea7
