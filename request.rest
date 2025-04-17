@@ -11,7 +11,7 @@ Content-Type: application/json
     "name": "malok khaled",
     "email": "malok@example.com",
     "password": "password",
-    "role": "Standard User"
+    "role": ""
 }
 
 # login user
@@ -20,7 +20,7 @@ POST http://localhost:5000/api/v1/users/login
 Content-Type: application/json
 
 {
-    "email": "malok@example.com",
+    "email": "maloka@example.com",
     "password": "password"
 }
 
@@ -66,7 +66,7 @@ POST http://localhost:5000/api/v1/events
 Content-Type: application/json
 
 {
-  "title": "Summer Music Festival",
+  "title": "Winter Music Festival",
   "description": "Open air music festival with multiple stages",
   "status": "approved",
   "date": "2025-07-20T16:00:00Z",
@@ -109,7 +109,15 @@ POST http://localhost:5000/api/v1/bookings
 Content-Type: application/json
 
 {
-  "eventId": "6801431d9393b5e96c9528c3",
-  "numberOfTickets": 2,
-  "totalPrice": 259.00
+  "eventId": "68014a8739986883a3e6af38",
+  "numberOfTickets": 2
 }
+
+# get booking details
+###
+GET http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
+
+#DELETE booking
+###
+DELETE http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
+
