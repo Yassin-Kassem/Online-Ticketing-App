@@ -53,6 +53,21 @@ const createEvent = async(req, res, next) =>{
         
     }
 }
+const getDetailsOfEvent = async(req, res, next) =>{
+    try {
+        const event = await Event.findById(req.params.id);
+        if(!event){
+            res.status(400);
+            throw new Error("event not found");
+        }
+        const{organizer, ...rest}=event._doc;
+        const orgName = await User.findById(organizer).name
+        return res.status(200).json({orgName, ...rest});
+    }
+    catch (error) {
+        next(error);
+    }
+}
 
 const deleteEvent = async(req, res, next) =>{
         try {
@@ -66,9 +81,10 @@ const deleteEvent = async(req, res, next) =>{
             next(error);
         }
 }
-
+ 
 module.exports = {
     getAllEvents,
     createEvent,
     deleteEvent,
+    getDetailsOfEvent,
 }
