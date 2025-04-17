@@ -4,13 +4,13 @@ const { auth } = require('../middleware/auth');
 const { validateRole, authoriseOnly } = require('../middleware/authorisationMiddleware');
 const router = express.Router();
 
-router.get("/", auth, getAllUsers);
+router.get("/", auth, authoriseOnly(['System Admin']),  getAllUsers);
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/logout', LogoutUser);
+router.get('/logout', auth, LogoutUser);
 router.post("/forgetPassword", forgotPassword);
-router.get("/:id", getUserById);
-router.put("/:id", validateRole, updateUserRole);
+router.get("/:id", auth , authoriseOnly(['System Admin']), getUserById);
+router.put("/:id", auth, validateRole, authoriseOnly(['System Admin']), updateUserRole);
 router.delete("/:id", auth, authoriseOnly(['System Admin']), deleteUser);
 
 module.exports = router;
