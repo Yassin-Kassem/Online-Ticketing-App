@@ -70,14 +70,14 @@ const getDetailsOfEvent = async(req, res, next) =>{
 }
 const updateEvent = async (req, res, next) => {
     try {
-      // Combine all fields to be updated into a single object
+    
       const updateData = {
         date: req.body.date,
         location: req.body.location,
         totalTicketsAvailable: req.body.totalTicketsAvailable,
       };
   
-      // Use findByIdAndUpdate with the combined update object
+   
       const event = await Event.findByIdAndUpdate(
         req.params.id,
         updateData,
