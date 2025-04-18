@@ -1,8 +1,8 @@
 require('dotenv').config()
 const express = require('express')
-const cors = require('cors')
 const connectDb = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
+const authRoutes = require('./routes/authRoutes')
 const eventRoutes = require('./routes/eventRoutes')
 const cookieParser = require("cookie-parser")
 const { auth } = require('./middleware/auth')
@@ -18,6 +18,7 @@ const port = process.env.PORT || 5000
 connectDb();
 
 // setup routes
+app.use("/api/v1", authRoutes)
 app.use("/api/v1/auth", auth)
 app.use("/api/v1/users" , userRoutes)
 app.use("/api/v1/events", eventRoutes)

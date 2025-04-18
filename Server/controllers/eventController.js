@@ -1,4 +1,4 @@
-const Event = require('../models/eventModel');
+const Event = require('../models/EventModel');
 const User = require('../models/UserModel');
 
 const getAllEvents = async(req, res, next) =>{
@@ -9,6 +9,18 @@ const getAllEvents = async(req, res, next) =>{
             throw new Error("No available events")
         }
         return res.status(200).json(events); 
+    } catch (error) {
+        next(error);
+    }
+}
+
+const getApprovedEvents = async(req, res, next) => {
+    try {
+        const events = await Event.find({status: "approved"});
+        if(events.length == 0){
+            res.status(400);
+            throw new Error("No available approved events")
+        }
     } catch (error) {
         next(error);
     }
@@ -104,4 +116,5 @@ module.exports = {
     deleteEvent,
     getDetailsOfEvent,
     updateEvent,
+    getApprovedEvents,
 }
