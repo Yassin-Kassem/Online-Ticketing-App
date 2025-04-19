@@ -2,6 +2,66 @@ const User = require('../models/UserModel');
 const Booking = require('../models/BookingModel');
 const Event = require('../models/EventModel');
 require('dotenv').config()
+const getProfile = async (req, res, next) => {
+    try {
+      // Extract the user ID from the authenticated user (available via req.user)
+      const userId = req.user.id;
+  
+      // Find the user by ID and exclude sensitive fields like password
+      const user = await User.findById(userId).select('-password');
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Return the user profile
+      return res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  };
+  // Update current user's profile
+const UpdateProfile = async (req, res) => {
+    try {
+      const userId = req.user.id; // Get the authenticated user's ID
+      const { name, email, profilePicture, password } = req.body;
+  
+      // Find the user by ID
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Validate email uniqueness if provided
+      if (email && email !== user.email) {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+          return res.status(400).json({ message: 'Email is already in use' });
+        }
+      }
+  
+      user.name = name || user.name;
+      user.email = email || user.email;
+      user.profilePicture = profilePicture || user.profilePicture;
+  
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+      }
+  
+      const updatedUser = await user.save();
+  
+      res.status(200).json({
+       
+        name: updatedUser.name,
+        email: updatedUser.email,
+        profilePicture: updatedUser.profilePicture,
+        
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 
 
 const getAllUsers = async(req, res, next) =>{
@@ -95,6 +155,8 @@ const deleteUser = async(req, res, next) => {
 }
 
   module.exports = {
+    getProfile,
+    UpdateProfile,
     getAllUsers,
     getUserById,
     updateUserRole,

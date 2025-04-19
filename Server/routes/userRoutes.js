@@ -1,9 +1,11 @@
 const express = require('express');
-const { getAllUsers, getUserById, updateUserRole, deleteUser, getUserBookings, getUserEvents} = require('../controllers/userController');
+const { getProfile, UpdateProfile,getAllUsers, getUserById, updateUserRole, deleteUser, getUserBookings, getUserEvents} = require('../controllers/userController');
 const { auth } = require('../middleware/auth');
 const { validateRole, authoriseOnly } = require('../middleware/authorisationMiddleware');
 const router = express.Router();
 
+router.put('/profile', auth, UpdateProfile);
+router.get("/profile", auth, getProfile); 
 router.get("/", auth, /*authoriseOnly(['System Admin']),*/  getAllUsers);
 router.get("/bookings", auth, authoriseOnly(['Standard User']), getUserBookings);
 router.get("/events", auth, authoriseOnly(['Organizer']), getUserEvents);

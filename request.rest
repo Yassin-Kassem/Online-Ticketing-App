@@ -9,9 +9,9 @@ Content-Type: application/json
 
 {
     "name": "malok khaled",
-    "email": "malok@example.com",
+    "email": "malokz@example.com",
     "password": "password",
-    "role": "Organizer",
+    "role": "Standard User"
 }
 
 # login user
@@ -20,8 +20,8 @@ POST http://localhost:5000/api/v1/login
 Content-Type: application/json
 
 {
-    "email": "harden2@example.com",
-    "password": "password1234"
+    "email": "malokz@example.com",
+    "password": "password"
 }
 
 
@@ -39,8 +39,8 @@ POST http://localhost:5000/api/v1/forgetPassword
 Content-Type: application/json
 
 {
-    "email": "harden2@example.com",
-    "newPassword": "password1234"
+    "email": "yassin@example.com",
+    "newPassword": "password123"
 }
 
 # get user by id
@@ -113,7 +113,7 @@ POST http://localhost:5000/api/v1/bookings
 Content-Type: application/json
 
 {
-  "eventId": "6803b1cc3e91b355a28cac22",
+  "eventId": "68014a8739986883a3e6af38",
   "numberOfTickets": 2
 }
 
@@ -121,12 +121,26 @@ Content-Type: application/json
 ###
 GET http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
 
-# get user bookings 
-###
-GET http://localhost:5000/api/v1/bookings
-
 #DELETE booking
 ###
 DELETE http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
 
 
+#get current profile
+###
+GET http://localhost:5000/api/v1/users/profile
+Authorization: Bearer <your_jwt_token>
+
+#update user profile
+###
+PUT http://localhost:5000/api/v1/users/profile
+Content-Type: application/json
+
+{
+ "name": "malokaaz" ,
+  "email": "zaza@gmail.com"
+}
+
+#get user bookings
+###
+GET http://localhost:5000/api/v1/users/bookings
