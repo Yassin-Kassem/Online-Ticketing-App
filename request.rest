@@ -144,3 +144,7 @@ Content-Type: application/json
 #get user bookings
 ###
 GET http://localhost:5000/api/v1/users/bookings
+
+#get user event analytics
+###
+GET http://localhost:5000/api/v1/users/events/analytics

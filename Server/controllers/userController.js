@@ -154,6 +154,33 @@ const deleteUser = async(req, res, next) => {
     }
 }
 
+const userEventAnalytics = async (req, res, next) => {
+    try {
+        const userId = req.user._id;
+        const events = await Event.find({ organizer: userId });
+        
+        if (!events || events.length === 0) {
+            return res.status(404).json({ message: 'No events found for this user' });
+        }
+
+        const eventsWithAnalytics = events.map(event => {
+            const ticketsBooked = event.totalTicketsAvailable - event.remainingTickets;
+            const bookingPercentage = (ticketsBooked / event.totalTicketsAvailable) * 100;
+            
+            return {
+                ...event.toObject(),
+                ticketsBooked,
+                bookingPercentage: Math.round(bookingPercentage * 100) / 100 + "%" // Round to 2 decimal places
+            };
+        });
+
+        return res.status(200).json(eventsWithAnalytics);
+    } catch (error) {
+        next(error);
+    }
+};
+
+
   module.exports = {
     getProfile,
     UpdateProfile,
@@ -163,4 +190,5 @@ const deleteUser = async(req, res, next) => {
     deleteUser,
     getUserBookings,
     getUserEvents,
+    userEventAnalytics,
   }
