@@ -70,26 +70,19 @@ const getDetailsOfEvent = async(req, res, next) =>{
 }
 const updateEvent = async (req, res, next) => {
     try {
-     
-      
+
       const updateData = {
         date: req.body.date,
         location: req.body.location,
         totalTicketsAvailable: req.body.totalTicketsAvailable,
       };
-  
 
-     
+
       const event = await Event.findByIdAndUpdate(
         req.params.id,
-        {
-          date: req.body.date,
-          location: req.body.location,
-          totalTicketsAvailable: req.body.totalTicketsAvailable,
-        },
+        updateData,
         { new: true, runValidators: true }
       );
-
 
       if (!event) {
         return res.status(404).json({ message: 'Event not found' });
