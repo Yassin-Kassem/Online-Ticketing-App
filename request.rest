@@ -8,9 +8,10 @@ POST http://localhost:5000/api/v1/register
 Content-Type: application/json
 
 {
-    "name": "malek khaled",
-    "email": "malooka@example.com",
-    "password": "password"
+    "name": "malok khaled",
+    "email": "malok@example.com",
+    "password": "password",
+    "role": ""
 }
 
 # login user
@@ -19,8 +20,13 @@ POST http://localhost:5000/api/v1/login
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
     "email": "yassin63@example.com",
     "password": "password123"
+=======
+    "email": "maloka@example.com",
+    "password": "password"
+>>>>>>> 53b59b0e586909e302f095e44a355acd3ed88ac3
 }
 
 
@@ -65,8 +71,9 @@ POST http://localhost:5000/api/v1/events
 Content-Type: application/json
 
 {
-  "title": "Summer Music Festival",
+  "title": "Winter Music Festival",
   "description": "Open air music festival with multiple stages",
+  "status": "approved",
   "date": "2025-07-20T16:00:00Z",
   "location": "Central Park, New York",
   "category": "concert",
@@ -82,3 +89,40 @@ GET http://localhost:5000/api/v1/events/all
 # delete event
 ###
 DELETE http://localhost:5000/api/v1/events/68011d7b6db61dfd4f380ea7
+
+#update event
+###
+PUT http://localhost:5000/api/v1/events/6801431d9393b5e96c9528c3
+Content-Type: application/json
+
+{
+  
+  
+  "date": "2027-07-20T16:00:00Z",
+  "location": "Centrap Park, New York",
+  "totalTicketsAvailable": 10010
+  
+}
+
+#get details of event
+###
+GET http://localhost:5000/api/v1/events/6801431d9393b5e96c9528c3
+
+#book event tickets
+###
+POST http://localhost:5000/api/v1/bookings
+Content-Type: application/json
+
+{
+  "eventId": "68014a8739986883a3e6af38",
+  "numberOfTickets": 2
+}
+
+# get booking details
+###
+GET http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
+
+#DELETE booking
+###
+DELETE http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
+

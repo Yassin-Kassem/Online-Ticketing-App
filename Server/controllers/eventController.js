@@ -82,14 +82,14 @@ const getDetailsOfEvent = async(req, res, next) =>{
 }
 const updateEvent = async (req, res, next) => {
     try {
-      
+
       const updateData = {
         date: req.body.date,
         location: req.body.location,
         totalTicketsAvailable: req.body.totalTicketsAvailable,
       };
 
-     
+
       const event = await Event.findByIdAndUpdate(
         req.params.id,
         updateData,
