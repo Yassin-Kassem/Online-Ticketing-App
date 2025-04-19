@@ -20,13 +20,8 @@ POST http://localhost:5000/api/v1/login
 Content-Type: application/json
 
 {
-<<<<<<< HEAD
-    "email": "yassin63@example.com",
-    "password": "password123"
-=======
     "email": "maloka@example.com",
     "password": "password"
->>>>>>> 53b59b0e586909e302f095e44a355acd3ed88ac3
 }
 
 
