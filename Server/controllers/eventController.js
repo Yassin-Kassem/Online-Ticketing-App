@@ -21,6 +21,7 @@ const getApprovedEvents = async(req, res, next) => {
             res.status(400);
             throw new Error("No available approved events")
         }
+        return res.status(200).json(events);
     } catch (error) {
         next(error);
     }
