@@ -16,7 +16,7 @@ const getAllEvents = async(req, res, next) =>{
 
 const getApprovedEvents = async(req, res, next) => {
     try {
-        const events = await Event.find({status: "approved"});
+        const events = await Event.find({ status: 'approved' });
         if(events.length == 0){
             res.status(400);
             throw new Error("No available approved events")

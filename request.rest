@@ -11,7 +11,7 @@ Content-Type: application/json
     "name": "malok khaled",
     "email": "malok@example.com",
     "password": "password",
-    "role": ""
+    "role": "Organizer",
 }
 
 # login user
@@ -20,8 +20,8 @@ POST http://localhost:5000/api/v1/login
 Content-Type: application/json
 
 {
-    "email": "maloka@example.com",
-    "password": "password"
+    "email": "harden3@example.com",
+    "password": "password1234"
 }
 
 
@@ -35,11 +35,11 @@ GET http://localhost:5000/api/v1/users/logout
 
 # forgot password
 ###
-POST http://localhost:5000/api/v1/users/forgetPassword
+POST http://localhost:5000/api/v1/forgetPassword
 Content-Type: application/json
 
 {
-    "email": "malooka@example.com",
+    "email": "yassin@example.com",
     "newPassword": "password123"
 }
 
@@ -49,11 +49,11 @@ GET http://localhost:5000/api/v1/users/67fd6b50ab7843d3f6ce13c7
 
 # update user role
 ###
-PUT http://localhost:5000/api/v1/users/67fd6b50ab7843d3f6ce13c7
+PUT http://localhost:5000/api/v1/users/67fd6c5cebd0eed9e21675db
 Content-Type: application/json
 
 {
-    "role" : "System Admin" 
+    "role" : "Organizer" 
 }
 
 # delete user
@@ -80,6 +80,10 @@ Content-Type: application/json
 # get all events
 ###
 GET http://localhost:5000/api/v1/events/all
+
+# get all events approved
+###
+GET http://localhost:5000/api/v1/events/
 
 # delete event
 ###
