@@ -24,7 +24,9 @@ app.use("/api/v1/auth", auth)
 app.use("/api/v1/users" , userRoutes)
 app.use("/api/v1/events", eventRoutes)
 app.use("/api/v1/bookings", bookingRoutes)
-
+app.use((req, res) => {
+    res.status(404).json({ message: "Route not found" });
+});
 
 // start the server 
 app.listen(port, () => console.log(`Server running on port ${port}`));

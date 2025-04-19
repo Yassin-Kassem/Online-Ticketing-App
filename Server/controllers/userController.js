@@ -1,4 +1,6 @@
 const User = require('../models/UserModel');
+const Booking = require('../models/BookingModel');
+const Event = require('../models/EventModel');
 require('dotenv').config()
 
 
@@ -47,6 +49,38 @@ const updateUserRole = async (req, res, next) => {
     }
 };
 
+const getUserBookings = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        if(!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        const bookings = await Booking.find({ user: userId });
+        if(!bookings) {
+            return res.status(404).json({ message: 'No bookings found for this user' });
+        }
+        return res.status(200).json(bookings);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const getUserEvents = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        if(!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        const events = await Event.find({ organizer: userId });
+        if(!events) {
+            return res.status(404).json({ message: 'No events found for this organizer' });
+        }
+        return res.status(200).json(message = events);
+    } catch (error) {
+        next(error);
+    }
+}
+
 const deleteUser = async(req, res, next) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
@@ -65,4 +99,6 @@ const deleteUser = async(req, res, next) => {
     getUserById,
     updateUserRole,
     deleteUser,
+    getUserBookings,
+    getUserEvents,
   }
