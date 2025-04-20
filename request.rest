@@ -8,10 +8,10 @@ POST http://localhost:5000/api/v1/register
 Content-Type: application/json
 
 {
-    "name": "malok khaled",
-    "email": "malokz@example.com",
-    "password": "password",
-    "role": "Standard User"
+    "name": "Yassin Kassem",
+    "email": "yassinkassem29@gmail.com",
+    "password": "password1234",
+    "role": "System Admin"
 }
 
 # login user
@@ -20,8 +20,8 @@ POST http://localhost:5000/api/v1/login
 Content-Type: application/json
 
 {
-    "email": "malokz@example.com",
-    "password": "password"
+    "email": "yassinkassem29@gmail.com",
+    "password": "password123456"
 }
 
 
@@ -31,7 +31,7 @@ GET http://localhost:5000/api/v1/auth
 
 # Logout
 ###
-GET http://localhost:5000/api/v1/users/logout
+GET http://localhost:5000/api/v1/logout
 
 # forgot password
 ###
@@ -39,8 +39,8 @@ POST http://localhost:5000/api/v1/forgetPassword
 Content-Type: application/json
 
 {
-    "email": "yassin@example.com",
-    "newPassword": "password123"
+    "email": "harden2@example.com",
+    "newPassword": "password1234"
 }
 
 # get user by id
@@ -113,7 +113,7 @@ POST http://localhost:5000/api/v1/bookings
 Content-Type: application/json
 
 {
-  "eventId": "68014a8739986883a3e6af38",
+  "eventId": "6803b1cc3e91b355a28cac22",
   "numberOfTickets": 2
 }
 
@@ -121,30 +121,41 @@ Content-Type: application/json
 ###
 GET http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
 
+# get user bookings 
+###
+GET http://localhost:5000/api/v1/users/bookings
+
+# get user events 
+###
+GET http://localhost:5000/api/v1/users/events
+
 #DELETE booking
 ###
 DELETE http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
 
-
-#get current profile
+#forgot password
 ###
-GET http://localhost:5000/api/v1/users/profile
-Authorization: Bearer <your_jwt_token>
-
-#update user profile
-###
-PUT http://localhost:5000/api/v1/users/profile
+POST http://localhost:5000/api/v1/forgotPassword
 Content-Type: application/json
 
 {
- "name": "malokaaz" ,
-  "email": "zaza@gmail.com"
+  "email" : "yassinkassem29@gmail.com"
 }
-
-#get user bookings
+# verify OTP
 ###
-GET http://localhost:5000/api/v1/users/bookings
+POST http://localhost:5000/api/v1/verifyOtp
+Content-Type: application/json
 
-#get user event analytics
+{
+  "email" : "yassinkassem29@gmail.com",
+  "otp" : "145943"
+}
+# reset password
 ###
-GET http://localhost:5000/api/v1/users/events/analytics
+POST http://localhost:5000/api/v1/resetPassword
+Content-Type: application/json
+
+{
+  "email" : "yassinkassem29@gmail.com",
+  "newPassword" : "password"
+}
