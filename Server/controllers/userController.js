@@ -3,6 +3,7 @@ const Booking = require('../models/BookingModel');
 const Event = require('../models/EventModel');
 const validator = require('validator');
 require('dotenv').config()
+
 const getProfile = async (req, res, next) => {
     try {
       // Extract the user ID from the authenticated user (available via req.user)
@@ -24,10 +25,14 @@ const getProfile = async (req, res, next) => {
   // Update current user's profile
 const UpdateProfile = async (req, res) => {
     try {
-      const userId = req.user.id; // Get the authenticated user's ID
-      const { name, email, profilePicture, password } = req.body;
-  
-      // Find the user by ID
+        const userId = req.user.id; // Get the authenticated user's ID
+        const { name, email, profilePicture, password } = req.body;
+        
+    if (email && !validator.isEmail(email)) {
+        return res.status(400).json({ message: 'Invalid email format' });
+    }
+
+        // Find the user by ID
       const user = await User.findById(userId);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -45,18 +50,7 @@ const UpdateProfile = async (req, res) => {
       user.email = email || user.email;
       user.profilePicture = profilePicture || user.profilePicture;
      
-      if (email && !validator.isEmail(email)) {
-        return res.status(400).json({ message: 'Invalid email format' });
-      }
-      if (password && password.length < 8) {
-        return res.status(400).json({ message: 'Password must be at least 8 characters long' });
-      }
-  
-      if (password) {
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt);
-      }
-  
+      
       const updatedUser = await user.save();
   
       res.status(200).json({
