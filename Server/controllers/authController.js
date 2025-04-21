@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+
 const rateLimit = require('express-rate-limit');
 require("dotenv").config();
 
@@ -27,6 +28,12 @@ const registerUser = async(req, res, next) =>{
             res.status(400);
             throw new Error("User not Created");
         }
+        if (email && !validator.isEmail(email)) {
+                return res.status(400).json({ message: 'Invalid email format' });
+              }
+        if (password && password.length < 8) {
+            return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+          }
 
         // hash password before saving to db
         const { password : userPassword, ...otherData} = user._doc;
@@ -239,6 +246,9 @@ const resetPassword = async (req, res, next) => {
         if (isSamePassword) {
             return res.status(400).json({ message: "New password cannot be the same as the old password" });
         }
+        if (newPassword && newPassword.length < 8) {
+            return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+          }
 
         // Hash the new password
         const salt = await bcrypt.genSalt(10);

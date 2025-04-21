@@ -1,6 +1,7 @@
 const User = require('../models/UserModel');
 const Booking = require('../models/BookingModel');
 const Event = require('../models/EventModel');
+const validator = require('validator');
 require('dotenv').config()
 const getProfile = async (req, res, next) => {
     try {
@@ -43,6 +44,13 @@ const UpdateProfile = async (req, res) => {
       user.name = name || user.name;
       user.email = email || user.email;
       user.profilePicture = profilePicture || user.profilePicture;
+     
+      if (email && !validator.isEmail(email)) {
+        return res.status(400).json({ message: 'Invalid email format' });
+      }
+      if (password && password.length < 8) {
+        return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+      }
   
       if (password) {
         const salt = await bcrypt.genSalt(10);

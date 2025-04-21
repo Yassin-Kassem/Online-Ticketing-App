@@ -23,6 +23,9 @@ exports.createBooking = async (req, res) => {
     if (event.remainingTickets < numberOfTickets) {
       return res.status(400).json({ message: 'Not enough tickets available' });
     }
+    if (!Number.isInteger(numberOfTickets)) {
+      return res.status(400).json({ message: 'Number of tickets must be an integer' });
+    }
 
     event.remainingTickets -= numberOfTickets;
     await event.save();
@@ -54,6 +57,7 @@ exports.getBooking = async (req, res) => {
     if (booking.user.toString() !== req.user.id) {
       return res.status(403).json({ message: 'Access denied' });
     }
+    
     res.json({
       ...booking.toObject(),
       totalPrice: booking.numberOfTickets * booking.event.ticketPricing,
