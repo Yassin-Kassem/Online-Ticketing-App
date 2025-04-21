@@ -4,36 +4,57 @@ const jwt = require("jsonwebtoken");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const rateLimit = require('express-rate-limit');
+const validator = require("validator");
 require("dotenv").config();
 
 
 
-const registerUser = async(req, res, next) =>{
+const registerUser = async (req, res, next) => {
     try {
-        const {password, ...rest} = req.body;
+        const { email, password, name, ...rest } = req.body;
+
+        // Validate input
+        if (!email || !password || !name) {
+            return res.status(400).json({ message: "Email, password, and name are required" });
+        }
+
+        // Validate email format
+        if (!validator.isEmail(email)) {
+            return res.status(400).json({ message: "Invalid email format" });
+        }
+
+        // Validate password length
+        if (password.length < 8) {
+            return res.status(400).json({ message: "Password must be at least 8 characters long" });
+        }
+
+        // Check if user already exists
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(409).json({ message: "User already exists" });
+        }
+
+        // Hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        // check if user already exists
-        const userExists = await User.findOne({email: req.body.email});
-        if(userExists){
-            res.status(400);
-            throw new Error("User already exists");
-        }
-        const user = await User.create({
-            ...rest,
-            password: hashedPassword,
-        });
-        if(!user){
-            res.status(400);
-            throw new Error("User not Created");
-        }
 
-        // hash password before saving to db
-        const { password : userPassword, ...otherData} = user._doc;
-        return res.status(201).json(otherData);
+        // Create the user
+        const user = await User.create({
+            email,
+            password: hashedPassword,
+            name,
+            ...rest,
+        });
+
+        // Exclude password from the response
+        const { password: userPassword, ...userData } = user.toObject();
+
+        // Return success response
+        return res.status(201).json(userData);
 
     } catch (error) {
-        next(error);
+        console.error(error);
+        next(error); // Pass errors to the global error handler
     }
 }
 
@@ -78,6 +99,10 @@ const forgotPassword = async (req, res, next) => {
     try {
         const { email } = req.body;
 
+        // Validate email format
+        if (!email || !validator.isEmail(email)) {
+            return res.status(400).json({ message: "Invalid email address" });
+        }
         // Check if the user exists
         const user = await User.findOne({ email });
         if (!user) {
@@ -201,6 +226,10 @@ const verifyOTP = async(req, res, next) => {
     try {
         const { email, otp } = req.body;
 
+        // Validate email format
+        if (!email || !validator.isEmail(email)) {
+            return res.status(400).json({ message: "Invalid email address" });
+        }
         // Find the user by email
         const user = await User.findOne({ email });
         if (!user) {
@@ -228,12 +257,19 @@ const resetPassword = async (req, res, next) => {
     try {
         const { email, newPassword } = req.body;
 
+        // Validate email format
+        if (!email || !validator.isEmail(email)) {
+            return res.status(400).json({ message: "Invalid email address" });
+        }
         // Find the user by email
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
+        //Check if password iss at least 8 characters long
+        if (newPassword && newPassword.length < 8) {
+            return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+        }
         // Check if the new password is the same as the old password
         const isSamePassword = await bcrypt.compare(newPassword, user.password);
         if (isSamePassword) {
