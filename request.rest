@@ -9,8 +9,8 @@ Content-Type: application/json
 
 {
     "name": "Yassin Kassem",
-    "email": "yassinkassem29@gmail.com",
-    "password": "password1234",
+    "email": "yassinkassem1234@gmail.com",
+    "password": "pass",
     "role": "System Admin"
 }
 
@@ -20,28 +20,14 @@ POST http://localhost:5000/api/v1/login
 Content-Type: application/json
 
 {
-    "email": "yassinkassem29@gmail.com",
-    "password": "password123456"
+    "email": "yassinkassemsalt@gmail.com",
+    "password": "password1234"
 }
 
-
-# Auth 
-###
-GET http://localhost:5000/api/v1/auth
 
 # Logout
 ###
 GET http://localhost:5000/api/v1/logout
-
-# forgot password
-###
-POST http://localhost:5000/api/v1/forgetPassword
-Content-Type: application/json
-
-{
-    "email": "harden2@example.com",
-    "newPassword": "password1234"
-}
 
 # get user by id
 ###
@@ -133,13 +119,13 @@ GET http://localhost:5000/api/v1/users/events
 ###
 DELETE http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
 
-#forgot password
+# forgot password
 ###
 POST http://localhost:5000/api/v1/forgotPassword
 Content-Type: application/json
 
 {
-  "email" : "yassinkassem29@gmail.com"
+  "email" : "yassinkassemsalt@gmail.com"
 }
 # verify OTP
 ###
@@ -147,8 +133,8 @@ POST http://localhost:5000/api/v1/verifyOtp
 Content-Type: application/json
 
 {
-  "email" : "yassinkassem29@gmail.com",
-  "otp" : "145943"
+  "email" : "yassinkassemsalt@gmail.com",
+  "otp" : "342143"
 }
 # reset password
 ###
@@ -156,6 +142,6 @@ POST http://localhost:5000/api/v1/resetPassword
 Content-Type: application/json
 
 {
-  "email" : "yassinkassem29@gmail.com",
-  "newPassword" : "password"
+  "email" : "yassinkassemsalt@gmail.com",
+  "newPassword" : "password123"
 }
