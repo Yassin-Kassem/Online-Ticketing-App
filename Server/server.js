@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 const connectDb = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
 const authRoutes = require('./routes/authRoutes')
@@ -9,7 +10,12 @@ const { auth } = require('./middleware/auth')
 const bookingRoutes = require('./routes/bookingRoutes')
 
 // setup middleware
+
 const app = express();
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+}));
 app.use(express.json())
 app.use(cookieParser())
 
