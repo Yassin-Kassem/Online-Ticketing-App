@@ -18,7 +18,9 @@ api.interceptors.response.use(
 export const register = (data) => api.post('/register', data);
 export const login = (data) => api.post('/login', data);
 export const logout = () => api.post('/logOut');
-export const forgotPassword = (data) => api.post('/forgot-password', data);
+export const forgotPassword = (data) => api.post('/forgotPassword', data);
+export const verifyOTP = (data) => api.post('/verifyOtp', data);
+export const resetPassword = (data) => api.post('/resetPassword', data);
 export const getCurrentUser = () => api.get('/user');
 
 export default api;
