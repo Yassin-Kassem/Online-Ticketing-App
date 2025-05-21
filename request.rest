@@ -21,7 +21,7 @@ Content-Type: application/json
 
 {
     "email": "yassinkassemsalt@gmail.com",
-    "password": "password1234"
+    "password": "password123"
 }
 
 
