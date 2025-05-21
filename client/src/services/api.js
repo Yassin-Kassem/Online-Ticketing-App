@@ -1,0 +1,24 @@
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: '/api/v1', 
+  withCredentials: true, 
+});
+
+// Interceptor to handle errors globally
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const message = error.response?.data?.message || 'An error occurred';
+    return Promise.reject({ message, status: error.response?.status });
+  }
+);
+
+// Auth API methods
+export const register = (data) => api.post('/register', data);
+export const login = (data) => api.post('/login', data);
+export const logout = () => api.post('/logOut');
+export const forgotPassword = (data) => api.post('/forgot-password', data);
+export const getCurrentUser = () => api.get('/user');
+
+export default api;
