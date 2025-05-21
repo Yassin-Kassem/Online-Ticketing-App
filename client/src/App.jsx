@@ -1,6 +1,9 @@
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import RegisterForm from './components/auth/RegisterForm'
+import ForgotPassword from './components/auth/ForgotPassword'
+import ResetPassword from './components/auth/ResetPassword'
+
 import { AuthProvider } from './context/AuthContext'
 import { ToastContainer } from 'react-toastify'
 const App = () => {
@@ -11,6 +14,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/register" element={<RegisterForm/>} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/reset-password" element={<ResetPassword/>} />
       </Routes> 
       </AuthProvider>
     </Router>
