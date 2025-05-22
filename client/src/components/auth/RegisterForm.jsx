@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import './register.css';
+import './stylesheets/register.css';
 
 const RegisterForm = () => {
   const context = useContext(AuthContext);

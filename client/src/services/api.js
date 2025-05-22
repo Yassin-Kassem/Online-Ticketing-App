@@ -17,10 +17,10 @@ api.interceptors.response.use(
 // Auth API methods
 export const register = (data) => api.post('/register', data);
 export const login = (data) => api.post('/login', data);
-export const logout = () => api.post('/logOut');
+export const logout = () => api.get('/logout');
 export const forgotPassword = (data) => api.post('/forgotPassword', data);
 export const verifyOTP = (data) => api.post('/verifyOtp', data);
 export const resetPassword = (data) => api.post('/resetPassword', data);
-export const getCurrentUser = () => api.get('/user');
+export const getCurrentUser = () => api.get('/users/profile');
 
 export default api;

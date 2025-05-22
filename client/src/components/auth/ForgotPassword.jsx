@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ForgotPassword.css'; 
+import './stylesheets/ForgotPassword.css'; 
 import { toast } from 'react-toastify';
 import { forgotPassword as sendOTP, verifyOTP } from '../../services/api';
 

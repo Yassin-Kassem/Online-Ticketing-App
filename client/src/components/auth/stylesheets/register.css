@@ -88,20 +88,19 @@ input {
   width: 100%;
 }
 
-/* New dropdown class to match input styles */
 .dropdown {
-  background-color: #eee; /* Match input background */
-  border: none; /* No border, like inputs */
-  padding: 12px 15px; /* Match input padding */
-  margin: 8px 0; /* Match input margin */
-  width: 100%; /* Full width */
-  border-radius: 5px; /* Slight rounding for consistency */
-  font-size: 16px; /* Match general text size in form */
+  background-color: #eee; 
+  border: 1px solid #bebebe; /* Dark grey border */
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+  border-radius: 7px;
+  font-size: 16px;
   color: #707070; 
-  appearance: none; /* Remove default browser styling */
-  -webkit-appearance: none; /* For Safari */
-  -moz-appearance: none; /* For Firefox */
-  cursor: pointer; /* Indicate it's selectable */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
 }
 
 /* Optional: Add a custom arrow for the dropdown */
