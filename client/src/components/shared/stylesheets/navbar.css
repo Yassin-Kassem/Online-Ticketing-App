@@ -4,17 +4,16 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
-  width: 100%;
+  right: 0;
+  height: 60px;
   background-color: white;
-  color: #333;
-  padding: 5px 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
+  padding: 0 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 
 .navbar-left {
   display: flex;

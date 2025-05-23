@@ -6,6 +6,8 @@ import ResetPassword from './components/auth/ResetPassword'
 import { AuthProvider } from './context/AuthContext'
 import { ToastContainer } from 'react-toastify'
 import Navbar from './components/shared/Navbar'
+import AdminUsersPage from './components/admin/AdminUsersPage'
+
 
 const App = () => {
   return (
@@ -18,6 +20,7 @@ const App = () => {
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/admin-users" element={<AdminUsersPage />} />
             </Routes>
           </AuthProvider>
         </Router>

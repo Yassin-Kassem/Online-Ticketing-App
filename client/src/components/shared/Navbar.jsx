@@ -9,7 +9,7 @@ const Navbar = () => {
   const isLoggedIn = !!user;
   const userRole = user ? user.role : 'guest';
 
-  console.log('Navbar user state:', { user, isLoggedIn, userRole }); 
+  // console.log('Navbar user state:', { user, isLoggedIn, userRole }); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
