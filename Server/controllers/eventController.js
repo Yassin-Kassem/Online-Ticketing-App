@@ -34,6 +34,18 @@ const createEvent = async(req, res, next) =>{
             res.status(401);
             throw new Error("User not found");
         }
+
+        // Define required fields
+        const requiredFields = [
+            'title',
+            'description',
+            'date',
+            'location',
+            'category',
+            'ticketPricing',
+            'totalTicketsAvailable'
+        ];
+
         const {
             title,
             description,
