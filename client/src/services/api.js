@@ -28,8 +28,5 @@ export const getAllUsers = () => api.get('/users')
 export const deleteUser = (id) => api.delete(`/users/${id}`);
 
 
-// Event API Methods
-export const getAllEvents = () => api.get('/events/all');
-export const getApprovedEvents = () => api.get('/events/')
 
 export default api;
