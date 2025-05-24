@@ -29,4 +29,9 @@ export const deleteUser = (id) => api.delete(`/users/${id}`);
 export const updateProfile = (data) => api.put('/users/profile', data);
 export const updateUserRole = (id, data) => api.put(`/users/${id}`, data);
 
+
+// Event API Methods
+export const getAllEvents = () => api.get('/events/all');
+export const getApprovedEvents = () => api.get('/events/')
+
 export default api;
