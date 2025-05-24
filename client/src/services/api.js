@@ -32,6 +32,8 @@ export const updateUserRole = (id, data) => api.put(`/users/${id}`, data);
 
 // Event API Methods
 export const getAllEvents = () => api.get('/events/all');
-export const getApprovedEvents = () => api.get('/events/')
+export const getApprovedEvents = () => api.get('/events/');
+export const getDetailsOfEvent = (id) => api.get(`/events/${id}`);
+export const updateStatus = (id, data) => api.put(`/events/status/${id}`, data);
 
 export default api;

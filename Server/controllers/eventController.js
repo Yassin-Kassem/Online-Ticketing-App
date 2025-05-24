@@ -123,6 +123,21 @@ const updateEvent = async (req, res, next) => {
       next(error);
     }
   };
+
+  const updateStatus = async(req, res, next) => {
+    try {
+        const updateData = {status:req.body.status}
+        const event = await Event.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true }
+        );
+
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+          }
+        return res.status(200).json(message = "status updated")
+    } catch (error) {
+        next(error);
+    }
+  }
 const deleteEvent = async(req, res, next) =>{
         try {
             const event = await Event.findByIdAndDelete(req.params.id);
@@ -143,4 +158,5 @@ module.exports = {
     getDetailsOfEvent,
     updateEvent,
     getApprovedEvents,
+    updateStatus
 }
