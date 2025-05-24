@@ -1,30 +1,30 @@
-import axios from 'axios';
+  import axios from 'axios';
 
-const api = axios.create({
-  baseURL: '/api/v1', 
-  withCredentials: true, 
-});
+  const api = axios.create({
+    baseURL: '/api/v1', 
+    withCredentials: true, 
+  });
 
-// Interceptor to handle errors globally
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const message = error.response?.data?.message || 'An error occurred';
-    return Promise.reject({ message, status: error.response?.status });
-  }
-);
+  // Interceptor to handle errors globally
+  api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      const message = error.response?.data?.message || 'An error occurred';
+      return Promise.reject({ message, status: error.response?.status });
+    }
+  );
 
-// Auth API methods
-export const register = (data) => api.post('/register', data);
-export const login = (data) => api.post('/login', data);
-export const logout = () => api.get('/logout');
-export const forgotPassword = (data) => api.post('/forgotPassword', data);
-export const verifyOTP = (data) => api.post('/verifyOtp', data);
-export const resetPassword = (data) => api.post('/resetPassword', data);
-export const getCurrentUser = () => api.get('/users/profile');
+  // Auth API methods
+  export const register = (data) => api.post('/register', data);
+  export const login = (data) => api.post('/login', data);
+  export const logout = () => api.get('/logout');
+  export const forgotPassword = (data) => api.post('/forgotPassword', data);
+  export const verifyOTP = (data) => api.post('/verifyOtp', data);
+  export const resetPassword = (data) => api.post('/resetPassword', data);
+  export const getCurrentUser = () => api.get('/users/profile');
 
-// User API Methods
-export const getAllUsers = () => api.get('/users')
-export const deleteUser = (id) => api.delete(`/users/${id}`);
+  // User API Methods
+  export const getAllUsers = () => api.get('/users')
+  export const deleteUser = (id) => api.delete(`/users/${id}`);
 
-export default api;
+  export default api;

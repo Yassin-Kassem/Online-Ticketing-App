@@ -9,8 +9,8 @@ Content-Type: application/json
 
 {
     "name": "Yassin Kassem",
-    "email": "yassinkassem1234@gmail.com",
-    "password": "pass",
+    "email": "yassingooner@gmail.com",
+    "password": "pass12345",
     "role": "System Admin"
 }
 
@@ -20,8 +20,8 @@ POST http://localhost:5000/api/v1/login
 Content-Type: application/json
 
 {
-    "email": "yassinkassemsalt@gmail.com",
-    "password": "password123"
+    "email": "yassingooner@gmail.com",
+    "password": "pass12345"
 }
 
 
@@ -31,15 +31,15 @@ GET http://localhost:5000/api/v1/logout
 
 # get user by id
 ###
-GET http://localhost:5000/api/v1/users/67fd6b50ab7843d3f6ce13c7
+GET http://localhost:5000/api/v1/users/68318b8d08b5cb088d932c53
 
 # update user role
 ###
-PUT http://localhost:5000/api/v1/users/67fd6c5cebd0eed9e21675db
+PUT http://localhost:5000/api/v1/users/68318b8d08b5cb088d932c53
 Content-Type: application/json
 
 {
-    "role" : "Organizer" 
+    "role" : "System Admin" 
 }
 
 # delete user
@@ -145,3 +145,5 @@ Content-Type: application/json
   "email" : "yassinkassemsalt@gmail.com",
   "newPassword" : "password123"
 }
+
+
