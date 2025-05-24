@@ -1,0 +1,149 @@
+# get all users
+###
+GET http://localhost:5000/api/v1/users
+
+# register user
+###
+POST http://localhost:5000/api/v1/register
+Content-Type: application/json
+
+{
+    "name": "Yassin Kassem",
+    "email": "yassingooner@gmail.com",
+    "password": "pass12345",
+    "role": "System Admin"
+}
+
+# login user
+###
+POST http://localhost:5000/api/v1/login
+Content-Type: application/json
+
+{
+    "email": "yassingooner@gmail.com",
+    "password": "pass12345"
+}
+
+
+# Logout
+###
+GET http://localhost:5000/api/v1/logout
+
+# get user by id
+###
+GET http://localhost:5000/api/v1/users/68318b8d08b5cb088d932c53
+
+# update user role
+###
+PUT http://localhost:5000/api/v1/users/68318b8d08b5cb088d932c53
+Content-Type: application/json
+
+{
+    "role" : "System Admin" 
+}
+
+# delete user
+###
+DELETE http://localhost:5000/api/v1/users/67fd68fd0663cf235ad9e697
+
+# create event
+###
+POST http://localhost:5000/api/v1/events
+Content-Type: application/json
+
+{
+  "title": "Winter Music Festival",
+  "description": "Open air music festival with multiple stages",
+  "status": "approved",
+  "date": "2025-07-20T16:00:00Z",
+  "location": "Central Park, New York",
+  "category": "concert",
+  "ticketPricing": 129.50,
+  "totalTicketsAvailable": 10000,
+  "remainingTickets": 10000
+}
+
+# get all events
+###
+GET http://localhost:5000/api/v1/events/all
+
+# get all events approved
+###
+GET http://localhost:5000/api/v1/events/
+
+# delete event
+###
+DELETE http://localhost:5000/api/v1/events/68011d7b6db61dfd4f380ea7
+
+#update event
+###
+PUT http://localhost:5000/api/v1/events/6801431d9393b5e96c9528c3
+Content-Type: application/json
+
+{
+  
+  
+  "date": "2027-07-20T16:00:00Z",
+  "location": "Centrap Park, New York",
+  "totalTicketsAvailable": 10010
+  
+}
+
+#get details of event
+###
+GET http://localhost:5000/api/v1/events/6801431d9393b5e96c9528c3
+
+#book event tickets
+###
+POST http://localhost:5000/api/v1/bookings
+Content-Type: application/json
+
+{
+  "eventId": "6803b1cc3e91b355a28cac22",
+  "numberOfTickets": 2
+}
+
+# get booking details
+###
+GET http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
+
+# get user bookings 
+###
+GET http://localhost:5000/api/v1/users/bookings
+
+# get user events 
+###
+GET http://localhost:5000/api/v1/users/events
+
+#DELETE booking
+###
+DELETE http://localhost:5000/api/v1/bookings/68014aa739986883a3e6af40
+
+# forgot password
+###
+POST http://localhost:5000/api/v1/forgotPassword
+Content-Type: application/json
+
+{
+  "email" : "yassinkassemsalt@gmail.com"
+}
+# verify OTP
+###
+POST http://localhost:5000/api/v1/verifyOtp
+Content-Type: application/json
+
+{
+  "email" : "yassinkassemsalt@gmail.com",
+  "otp" : "342143"
+}
+# reset password
+###
+POST http://localhost:5000/api/v1/resetPassword
+Content-Type: application/json
+
+{
+  "email" : "yassinkassemsalt@gmail.com",
+  "newPassword" : "password123"
+}
+
+
