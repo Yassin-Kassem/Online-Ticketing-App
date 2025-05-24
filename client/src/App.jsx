@@ -7,6 +7,8 @@ import { AuthProvider } from './context/AuthContext'
 import { ToastContainer } from 'react-toastify'
 import Navbar from './components/shared/Navbar'
 import AdminUsersPage from './components/admin/AdminUsersPage'
+import AdminDashboard from './components/admin/AdminDashboard'
+import ProfilePage from './pages/EditProfileForm'
 
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/admin-users" element={<AdminUsersPage />} />
+              <Route path="/admin" element={<AdminDashboard/>} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Routes>
           </AuthProvider>
         </Router>
