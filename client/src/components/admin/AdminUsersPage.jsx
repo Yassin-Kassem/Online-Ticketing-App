@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUsers, deleteUser } from '../../services/api';  
+import { useNavigate } from 'react-router-dom';
 import './stylesheets/userList.css';
 
 export default function UsersList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState(null);
+  const navigate = useNavigate();
 
   const fetchUsers = async () => {
     try {
@@ -37,7 +39,6 @@ export default function UsersList() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
-
     try {
       setDeletingId(id);
       await deleteUser(id);
@@ -48,6 +49,10 @@ export default function UsersList() {
     } finally {
       setDeletingId(null);
     }
+  };
+
+  const handleEdit = (user) => {
+    navigate(`/profile?userId=${user._id}`, { state: { user } });
   };
 
   return (
@@ -70,11 +75,11 @@ export default function UsersList() {
                     <span className={`role ${role}`}>{role}</span>
                   </div>
                   <div className="user-actions">
-                    <button
-                      className="btn edit"
-                      onClick={() => alert(`Edit ${email}`)}
+                  <button
+                    className="btn edit"
+                    onClick={() => handleEdit({ _id, email, role })}
                     >
-                      Edit
+                    Edit
                     </button>
                     <button
                       className="btn delete"
