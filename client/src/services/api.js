@@ -24,9 +24,9 @@ export const resetPassword = (data) => api.post('/resetPassword', data);
 export const getCurrentUser = () => api.get('/users/profile');
 
 // User API Methods
-export const getAllUsers = () => api.get('/users')
+export const getAllUsers = () => api.get('/users');
 export const deleteUser = (id) => api.delete(`/users/${id}`);
-
-
+export const updateProfile = (data) => api.put('/users/profile', data);
+export const updateUserRole = (id, data) => api.put(`/users/${id}`, data);
 
 export default api;

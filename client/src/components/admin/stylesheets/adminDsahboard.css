@@ -1,0 +1,158 @@
+/* General styles */
+.centered-dashboard-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    max-width: 1000px;
+    height: auto;
+    max-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 10;
+  }
+  
+  .dashboard-wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .card {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    width: calc(50% - 1rem);
+    min-width: 280px;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Only apply scroll to users card */
+    overflow-y: auto;
+    max-height: 400px;
+  }
+  
+  .users-card {
+    /* Force scroll behavior on user card */
+    overflow-y: auto;
+    max-height: 400px;
+  }
+  
+  .events-card {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    width: calc(50% - 1rem);
+    min-width: 280px;
+    transition: transform 0.2s ease;
+  
+    /* Disable scrolling */
+    overflow-y: visible !important;
+    max-height: none !important;
+  
+    /* Flexbox layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .events-card h2 {
+    margin-top: 0; /* Remove top margin from title */
+    margin-bottom: 1rem; /* Add some spacing after title */
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .card h2 {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #111;
+  }
+  
+  .count {
+    flex-grow: 1;
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #2563eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .pie-chart {
+    margin: 1rem auto;
+    position: relative;
+  }
+  
+  .pie-chart canvas {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .legend span {
+    display: flex;
+    align-items: center;
+  }
+  
+  .legend span em {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+  
+  .view-btn {
+    margin-top: auto; /* Pushes button to bottom */
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width button */
+  }
+  
+  .view-btn:hover {
+    background-color: #1d4ed8;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card {
+      width: 100%;
+    }
+  }
