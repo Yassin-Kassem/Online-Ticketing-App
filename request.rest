@@ -9,9 +9,9 @@ Content-Type: application/json
 
 {
     "name": "Yassin Kassem",
-    "email": "yassingooner@gmail.com",
+    "email": "yassingooner2@gmail.com",
     "password": "pass12345",
-    "role": "System Admin"
+    "role": "Organizer"
 }
 
 # login user
@@ -20,7 +20,7 @@ POST http://localhost:5000/api/v1/login
 Content-Type: application/json
 
 {
-    "email": "yassingooner@gmail.com",
+    "email": "yassingooner1@gmail.com",
     "password": "pass12345"
 }
 
@@ -52,7 +52,7 @@ POST http://localhost:5000/api/v1/events
 Content-Type: application/json
 
 {
-  "title": "Winter Music Festival",
+  "title": "minter Music Festival",
   "description": "Open air music festival with multiple stages",
   "status": "approved",
   "date": "2025-07-20T16:00:00Z",

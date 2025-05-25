@@ -94,10 +94,7 @@ const Profile = () => {
             </div>
           ) : (
             <div className="edit-section">
-              <form
-                className="profile-form glass-morphism"
-                onSubmit={handleSubmit}
-              >
+              <form className="profile-form edit-mode" onSubmit={handleSubmit}>
                 <div className="form-section">
                   <h3 className="section-title">Edit Profile</h3>
                   <div className="form-grid">
