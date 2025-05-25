@@ -10,6 +10,10 @@ import AdminUsersPage from './components/admin/AdminUsersPage';
 import AdminDashboard from './components/admin/AdminDashboard';
 import Profile from './components/UserManagement/Profile'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import EventDetailsPage from './components/event/EventDetails';
+import EventListPage from './components/event/EventList'; 
+import EventForm from './components/event/EventForm';
+
 
 const App = () => {
   return (
@@ -25,6 +29,17 @@ const App = () => {
             <Route path="/admin-users" element={<AdminUsersPage />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/profile" element={<Profile />} /> 
+            <Route path="/events/:id" element={<EventDetailsPage />} />
+            <Route path="/events" element={<EventListPage />} />
+            <Route path="/create-event" element={<EventForm />} />
+            <Route path="/edit-event/:id" element={<EventForm />} />
+
+
+            
+             
+            
+            
+          
           </Routes>
         </AuthProvider>
       </Router>
