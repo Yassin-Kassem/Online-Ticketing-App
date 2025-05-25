@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { getAllUsers, deleteUser } from '../../services/api';  
-import { useNavigate } from 'react-router-dom';
+import { getAllUsers, deleteUser, updateUserRole } from '../../services/api';  
 import './stylesheets/userList.css';
 
 export default function UsersList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [deletingId, setDeletingId] = useState(null);
-  const navigate = useNavigate();
+  const [deletingUser, setDeletingUser] = useState(null); // New state: user pending delete
+  const [editingUser, setEditingUser] = useState(null);
+  const [newRole, setNewRole] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+  const [isClosing, setIsClosing] = useState(false);
 
   const fetchUsers = async () => {
     try {
@@ -30,29 +33,76 @@ export default function UsersList() {
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, []);
+  // === ROLE MODAL HANDLERS ===
+  const openRoleModal = (user) => {
+    setEditingUser(user);
+    setNewRole(user.role || '');
+    setStatusMessage('');
+    setIsClosing(false);
+  };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this user?')) return;
+  const closeRoleModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setEditingUser(null);
+      setNewRole('');
+      setIsLoading(false);
+      setStatusMessage('');
+      setIsClosing(false);
+    }, 300);
+  };
+
+  const handleRoleChange = async () => {
+    if (!newRole) return;
     try {
-      setDeletingId(id);
-      await deleteUser(id);
+      setIsLoading(true);
+      await updateUserRole(editingUser._id, { role: newRole });
       await fetchUsers();
+      setStatusMessage('✅ Role updated successfully');
+      setTimeout(() => {
+        closeRoleModal();
+      }, 1000);
     } catch (error) {
-      console.error('Failed to delete user:', error.response || error);
-      alert('Failed to delete user. Please check console.');
+      console.error('Failed to update role:', error);
+      setStatusMessage('❌ Failed to update role. Check console for details.');
     } finally {
-      setDeletingId(null);
+      setIsLoading(false);
     }
   };
 
-  const handleEdit = (user) => {
-    navigate(`/profile?userId=${user._id}`, { state: { user } });
+  // === DELETE MODAL HANDLERS ===
+  const openDeleteModal = (user) => {
+    setDeletingUser(user);
+    setStatusMessage('');
+    setIsClosing(false);
+  };
+
+  const closeDeleteModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setDeletingUser(null);
+      setIsLoading(false);
+      setStatusMessage('');
+      setIsClosing(false);
+    }, 300);
+  };
+
+  const handleDelete = async () => {
+    if (!deletingUser) return;
+    try {
+      setIsLoading(true);
+      await deleteUser(deletingUser._id);
+      await fetchUsers();
+      setStatusMessage('✅ User deleted successfully');
+      setTimeout(() => {
+        closeDeleteModal();
+      }, 1000);
+    } catch (error) {
+      console.error('Failed to delete user:', error);
+      setStatusMessage('❌ Failed to delete user. Check console for details.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -75,15 +125,16 @@ export default function UsersList() {
                     <span className={`role ${role}`}>{role}</span>
                   </div>
                   <div className="user-actions">
-                  <button
-                    className="btn edit"
-                    onClick={() => handleEdit({ _id, email, role })}
+                    <button
+                      className="btn edit"
+                      onClick={() => openRoleModal({ _id, email, role })}
                     >
-                    Edit
+                      Edit Role
                     </button>
                     <button
                       className="btn delete"
-                      onClick={() => handleDelete(_id)}
+                      onClick={() => openDeleteModal({ _id, email })}
+                      disabled={isLoading} // disable while loading
                     >
                       Delete
                     </button>
@@ -93,6 +144,79 @@ export default function UsersList() {
           </div>
         </div>
       </div>
+
+      {/* Role Edit Modal */}
+      {editingUser && (
+        <div className="modal-overlay">
+          <div className={`modal-content ${isClosing ? 'slide-out' : ''}`}>
+            <h2>Edit Role for {editingUser.email}</h2>
+            <select
+              value={newRole}
+              onChange={(e) => setNewRole(e.target.value)}
+              disabled={isLoading}
+            >
+              <option value="">Select Role</option>
+              <option value="System Admin">System Admin</option>
+              <option value="Standard User">Standard User</option>
+              <option value="Organizer">Organizer</option>
+            </select>
+            {isLoading && <div className="loading-spinner"></div>}
+            {statusMessage && (
+              <p className={`status-message ${statusMessage.includes('❌') ? 'error' : ''}`}>
+                {statusMessage}
+              </p>
+            )}
+            <div className="modal-buttons">
+              <button
+                onClick={handleRoleChange}
+                className="btn save-btn"
+                disabled={isLoading}
+              >
+                Confirm Edit
+              </button>
+              <button
+                onClick={closeRoleModal}
+                className="btn cancel-btn"
+                disabled={isLoading}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deletingUser && (
+        <div className="modal-overlay">
+          <div className={`modal-content ${isClosing ? 'slide-out' : ''}`}>
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete <strong>{deletingUser.email}</strong>?</p>
+            {isLoading && <div className="loading-spinner"></div>}
+            {statusMessage && (
+              <p className={`status-message ${statusMessage.includes('❌') ? 'error' : ''}`}>
+                {statusMessage}
+              </p>
+            )}
+            <div className="modal-buttons">
+              <button
+                onClick={handleDelete}
+                className="btn delete"
+                disabled={isLoading}
+              >
+                Confirm Delete
+              </button>
+              <button
+                onClick={closeDeleteModal}
+                className="btn cancel-btn"
+                disabled={isLoading}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

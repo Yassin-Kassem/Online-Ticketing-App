@@ -1,124 +1,27 @@
-@import "tailwindcss";
+/* index.css */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
-}
-
-.container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-input:focus,
-select:focus {
-  outline: none;
-  border-color: #007bff;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.text-center {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.link {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
-}
-
-.Toastify__close-button {
-  top: 50% !important;
-  left: 10px !important;
-  right: auto !important;
-  transform: translateY(50%);
-  transform: translateX(1400%);
-  position: absolute !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  width: 20px; 
-  height: 20px;
-  padding: 0;
-  background: none;
-  border: none;
-  z-index: 2;
-}
-
-.Toastify__toast-body {
-  padding-left: 40px !important;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-.page-container {
+  min-width: 320px;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-.content {
-  flex: 1;
+#root {
+  width: 100%;
+  text-align: center;
 }
-
