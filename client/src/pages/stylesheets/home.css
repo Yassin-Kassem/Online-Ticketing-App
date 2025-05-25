@@ -1,0 +1,268 @@
+/* Standard CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100% !important; /* Ensure full width */
+    height: 100% !important; /* Ensure full height */
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: "Inter", sans-serif; /* Assuming Inter is available or linked */
+    overflow-x: hidden !important; /* Prevent horizontal scrollbar */
+}
+
+#root {
+  width: 100% !important; /* Ensure root takes full width */
+  height: 100% !important; /* Ensure full height */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure the main container takes full width */
+.home-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Styles for the hero section */
+.hero {
+  position: relative; /* Needed for absolute positioning of pseudo-elements */
+  width: 100%;
+  height: 100vh; /* Make the hero section span the full viewport height */
+  padding: 100px 0; /* Adjusted padding, moved from inline style */
+  color: white;
+  box-sizing: border-box; /* Ensure padding is included in width/height, moved from inline style */
+  display: flex; /* Enable flexbox */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  flex-direction: column; /* Stack items vertically */
+  text-align: center; /* Center text within the flex items */
+  overflow: hidden; /* Hide overflowing parts of the background image */
+}
+
+/* Background image pseudo-element */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../assets/landing-bg.jpg'); /* Path to your image */
+  background-size: cover;
+  background-position: center;
+  z-index: -2; /* Place behind the content and overlay */
+  filter: blur(3px); /* Apply blur effect directly to the image */
+}
+
+/* Overlay pseudo-element (no blur here) */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)); /* Subtle dark overlay */
+  z-index: -1; /* Place between background image and content */
+}
+
+/* Ensure hero content is above the pseudo-elements */
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card.rounded-3 {
+    border-radius: 1rem;
+  }
+  
+  .card .display-5 {
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover .display-5 {
+    transform: scale(1.1);
+  }
+
+/* Custom container for about section */
+.about-section-container {
+  max-width: 1000px; /* Increased max-width */
+  margin: 0 auto; /* Center the container */
+  padding: 0 15px; /* Add some horizontal padding */
+}
+
+.cta-section-container {
+    max-width: 1000px; /* Increased max-width */
+    width: 100% !important;
+    margin: 0 auto; /* Center the container */
+    padding: 0 15px; /* Add some horizontal padding */
+  }
+
+/* Adjust padding for cards within about section */
+.about-section .card {
+  padding: 60px 20px !important; /* Increased vertical padding */
+}
+
+.cta-bg {
+    background-image: url('../../assets/cta-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.about-bg {
+    background-image: url('../../assets/assets/cta-bg.jpg');
+}
+
+/* Transparent CTA Button */
+.btn-transparent {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white; /* White border */
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border-radius: 0; /* Sharp edges */
+  }
+  
+  /* Hover Animation */
+  .btn-transparent:hover {
+    background-color: white;
+    color: #007bff; /* Primary blue text on hover */
+    border-color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2);
+  }
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    70% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+  }
+  
+  .btn-transparent:hover {
+    animation: pulse 1.5s infinite;
+  }
+
+  .footer-links a:hover {
+    color: #00bfff !important;
+    transition: color 0.3s ease;
+  }
+  
+  footer a {
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.3s ease;
+  }
+  
+  footer a:hover {
+    color: #ffffff;
+  }
+
+/* Styles for the Footer */
+.footer {
+  background-color: #343a40; /* Dark background color */
+  color: rgba(255, 255, 255, 0.5); /* Light text color with some transparency */
+  position: relative; /* Ensure footer is in normal document flow */
+  z-index: auto; /* Reset z-index */
+  /* Padding is handled by Bootstrap's py-5 class */
+}
+
+.footer a {
+  color: rgba(255, 255, 255, 0.7); /* Link color */
+}
+
+.footer a:hover {
+  color: #ffffff; /* Link color on hover */
+  text-decoration: none; /* Remove underline on hover */
+}
+
+.footer .container {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.footer small {
+  font-size: 0.9rem;
+}
+
+.footer .list-unstyled li {
+  margin-bottom: 0.5rem; /* Space out list items */
+}
+
+.footer .social-icons .list-inline-item {
+  margin-right: 15px; /* Space out social icons */
+}
+
+.footer .social-icons a {
+  font-size: 1.5rem; /* Size of social icons */
+  color: rgba(255, 255, 255, 0.7); /* Color of social icons */
+  transition: color 0.3s ease;
+}
+
+.footer .social-icons a:hover {
+  color: #ffffff; /* Color of social icons on hover */
+}
+
+/* Styles for the CTA Section */
+.cta-bg {
+  background-image: url('../../assets/cta-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex; /* Enable flexbox */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center content horizontally on small screens */
+  flex-direction: column; /* Stack items vertically by default */
+  padding: 40px 15px; /* Add default padding */
+}
+
+.cta-bg .text-content {
+    text-align: center; /* Center text and button */
+}
+
+@media (min-width: 768px) {
+    .cta-bg {
+        flex-direction: row; /* Arrange side-by-side on medium screens and up */
+        justify-content: space-around; /* Distribute space between items */
+        padding: 80px 15px; /* Adjust padding for larger screens */
+    }
+
+    .cta-bg .text-content {
+        flex: 1; /* Allow text content to grow */
+        max-width: 50%; /* Limit text content width */
+        padding-right: 30px; /* Add space between text and lottie */
+        text-align: center; /* Center text on desktop too */
+    }
+
+    .cta-bg .lottie-container {
+        flex: 1; /* Allow lottie container to grow */
+        max-width: 50%; /* Limit lottie container width */
+        padding-left: 30px; /* Add space between text and lottie */
+    }
+}
+
+.cta-bg .text-content h2,
+.cta-bg .text-content p,
+.cta-bg .text-content a.btn-transparent {
+    color: white !important; /* Ensure text color is white */
+}
+
+.cta-bg .lottie-container > div,
+.cta-bg .lottie-container svg {
+    background-color: transparent !important; /* Attempt transparent background for lottie */
+}
+
+/* Add styles for other sections or components as required below this */

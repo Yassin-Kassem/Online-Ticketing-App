@@ -1,7 +1,9 @@
+// src/components/Navbar.jsx
 import React, { useState, useContext } from 'react';
-import './stylesheets/navbar.css';
 import { FaUser } from 'react-icons/fa';
 import { AuthContext } from '../../context/AuthContext';
+import './stylesheets/navbar.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,90 +11,76 @@ const Navbar = () => {
   const isLoggedIn = !!user;
   const userRole = user ? user.role : 'guest';
 
-  // console.log('Navbar user state:', { user, isLoggedIn, userRole }); 
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleLogoutClick = () => {
+  const handleLogout = () => {
     logout();
     setIsOpen(false);
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-left">
-        <a href="/" className="navbar-brand">
-          <span className="navbar-logo">📅</span>
-          EventEase
+    <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm w-100 fixed-top" style={{ top: '20px' }}>
+      <div className="container-fluid px-3">
+      <a className="navbar-brand d-flex align-items-center" href="/">
+          <span role="img" aria-label="logo" className="me-2 fs-3">📅</span>
+          <strong className="text-primary fs-4">EventEase</strong>
         </a>
-      </div>
-
-      <div className="navbar-center-links">
-        <a href="/" className="nav-link">Home</a>
-        {isLoggedIn && (
-          <>
-            <a href="/profile" className="nav-link">Profile</a>
-            {userRole === "Standard User" && (
-              <a href="/bookings" className="nav-link">My Bookings</a>
-            )}
-            {userRole === "Organizer" && (
-              <a href="/my-events" className="nav-link">My Events</a>
-            )}
-            {userRole === "System Admin" && (
-              <a href="/admin" className="nav-link">Admin Dashboard</a>
-            )}
-          </>
-        )}
-      </div>
-
-      <div className="navbar-right">
-        {isLoggedIn ? (
-          <div className="navbar-auth-links">
-            <a href="/profile" className="profile-icon-link">
-              <FaUser className="profile-icon" />
-            </a>
-            <button onClick={handleLogoutClick} className="navbar-logout-button">Logout</button>
-          </div>
-        ) : (
-          <div className="navbar-auth-links">
-            <a href="/register" className="navbar-register-button">Get Started</a>
-          </div>
-        )}
-      </div>
-
-      <div className="navbar-mobile-toggle">
-        <button onClick={toggleMenu} className="menu-icon">
-          {isOpen ? '✕' : '☰'}
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span className="navbar-toggler-icon"></span>
         </button>
-      </div>
 
-      {isOpen && (
-        <div className="navbar-mobile-menu">
-          <a href="/" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Home</a>
-          {isLoggedIn ? (
-            <>
-              <a href="/profile" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Profile</a>
-              {userRole === "user" && (
-                <a href="/bookings" className="mobile-nav-link" onClick={() => setIsOpen(false)}>My Bookings</a>
-              )}
-              {userRole === "Organizer" && (
-                <a href="/my-events" className="mobile-nav-link" onClick={() => setIsOpen(false)}>My Events</a>
-              )}
-              {userRole === "System Admin" && (
-                <a href="/admin" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Admin Dashboard</a>
-              )}
-              <button onClick={handleLogoutClick} className="mobile-logout-button">Logout</button>
-            </>
-          ) : (
-            <>
-              <a href="/login" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Login</a>
-              <a href="/register" className="mobile-nav-link mobile-register-button" onClick={() => setIsOpen(false)}>Register</a>
-            </>
-          )}
+        <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
+          <ul className="navbar-nav mx-auto mb-2 mb-md-0">
+            <li className="nav-item">
+              <a className="nav-link fw-bold" href="/">Home</a>
+            </li>
+            {isLoggedIn && (
+              <>
+                <li className="nav-item">
+                  <a className="nav-link fw-bold" href="/profile">Profile</a>
+                </li>
+                {userRole === "Standard User" && (
+                  <li className="nav-item">
+                    <a className="nav-link fw-bold" href="/bookings">My Bookings</a>
+                  </li>
+                )}
+                {userRole === "Organizer" && (
+                  <li className="nav-item">
+                    <a className="nav-link fw-bold" href="/my-events">My Events</a>
+                  </li>
+                )}
+                {userRole === "System Admin" && (
+                  <li className="nav-item">
+                    <a className="nav-link fw-bold" href="/admin">Admin Dashboard</a>
+                  </li>
+                )}
+              </>
+            )}
+          </ul>
+
+          <div className="d-flex align-items-center">
+            {isLoggedIn ? (
+              <>
+                <a href="/profile" className="text-primary me-3">
+                  <FaUser size={18} />
+                </a>
+                <button
+                  onClick={handleLogout}
+                  className="btn btn-outline-dark btn-sm"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <a href="/register" className="btn btn-primary btn-sm">
+                Get Started
+              </a>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

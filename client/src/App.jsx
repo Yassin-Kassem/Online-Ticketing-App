@@ -9,6 +9,7 @@ import Navbar from './components/shared/Navbar';
 import AdminUsersPage from './components/admin/AdminUsersPage';
 import AdminDashboard from './components/admin/AdminDashboard';
 import Profile from './components/UserManagement/Profile'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (

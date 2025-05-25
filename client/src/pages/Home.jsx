@@ -1,12 +1,22 @@
-  import React from 'react'
+import React from 'react';
+import './stylesheets/home.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from '../components/shared/Footer';
+import Hero from './homeSections/Hero';
+import About from './homeSections/About';
+import CTA from './homeSections/CTA';
+
 
 
   const Home = () => {
     return (
-      <div>
-        <h1>Home</h1>
+      <div className="home-container">
+        <Hero/>
+        <About/>
+        <CTA/>
+        <Footer/>
       </div>
-    )
-  }
+    );
+};
 
-  export default Home
+export default Home;
