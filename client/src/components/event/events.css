@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat :400,800');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0  ;
+}
+
+body {
+    background: #f6f5f7;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.event-container {
+    max-width: 900px; /* Adjusted for better visibility */
+    margin: 0 auto;
+    padding: 150px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Vertical spacing between event cards */
+}
+
+.event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 20px; /* Increased padding for better visibility */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.event-item:hover {
+    transform: translateY(-2px);
+}
+
+.event-details {
+    flex: 1; /* Allows the details section to expand as needed */
+}
+
+.event-name {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.event-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5; /* Improved readability */
+}
+
+.event-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.event-actions button {
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: linear-gradient(45deg, #FF4B2B, #FF6A47);
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 20px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.event-actions button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: 0.5s ease;
+}
+
+.event-actions button:hover::before {
+    left: 100%;
+}
+
+.event-actions button:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    background: linear-gradient(45deg, #e04327, #ff5840);
+}
+
+.event-actions button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(45deg, #d03c22, #e04d37);
+}
+
+.event-actions button:focus {
+    outline: none;
+}
+.bottom-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Increase or decrease as needed */
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.bottom-buttons .animated-button {
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(45deg, #FF4B2B, #FF6A47);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 24px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 75, 43, 0.25);
+}

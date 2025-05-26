@@ -15,6 +15,7 @@ import EventListPage from './components/event/EventList';
 import EventForm from './components/event/EventForm';
 import Unauthorized from './routes/Unauthorized';
 import MyEvents from './components/event/MyEvents';
+import CreateEvent from './components/event/CreateEvent'
 
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="/edit-event/:id" element={<EventForm />} />
             <Route path="/unauthorized" element={<Unauthorized/>} />
             <Route path="/my-events" element={<MyEvents />} />
+            <Route path="/create-event" element={<CreateEvent />} />
           </Routes>
         </AuthProvider>
       </Router>
