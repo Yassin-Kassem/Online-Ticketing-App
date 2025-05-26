@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAllUsers, deleteUser, updateUserRole } from '../../services/api';  
 import './stylesheets/userList.css';
+import useRequireRole from '../../routes/roleCheck';
 
 export default function UsersList() {
+  useRequireRole(['System Admin']); // 🔐 Hook handles auth + redirect
+
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [deletingUser, setDeletingUser] = useState(null); // New state: user pending delete
+  const [deletingUser, setDeletingUser] = useState(null);
   const [editingUser, setEditingUser] = useState(null);
   const [newRole, setNewRole] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -128,13 +131,14 @@ export default function UsersList() {
                     <button
                       className="btn edit"
                       onClick={() => openRoleModal({ _id, email, role })}
+                      disabled={isLoading}
                     >
                       Edit Role
                     </button>
                     <button
                       className="btn delete"
                       onClick={() => openDeleteModal({ _id, email })}
-                      disabled={isLoading} // disable while loading
+                      disabled={isLoading}
                     >
                       Delete
                     </button>

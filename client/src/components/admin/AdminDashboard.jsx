@@ -1,61 +1,69 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { getAllEvents, getAllUsers, getApprovedEvents } from '../../services/api';
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import './stylesheets/AdminDashboard.css';
+import Loader from '../shared/Loader';
+import { useNavigate } from 'react-router-dom';
+import useRequireRole from '../../routes/roleCheck';
+import { getAllEvents, getAllUsers, getApprovedEvents } from '../../services/api';
 
 export default function AdminDashboard() {
+  useRequireRole(['System Admin'])
   const [eventCounts, setEventCounts] = useState({
     approved: 0,
     others: 0
   });
   const [userCount, setUserCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const chartRef = useRef(null);
+  const chartRef = React.useRef(null);
 
+  const { user, isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  
+
+  // Fetch Event Stats
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [allRes, approvedRes] = await Promise.all([
-          getAllEvents(),
-          getApprovedEvents()
-        ]);
-
+        const [allRes, approvedRes] = await Promise.all([getAllEvents(), getApprovedEvents()]);
         const allEvents = Array.isArray(allRes?.data) ? allRes.data : [];
         const approvedEvents = Array.isArray(approvedRes?.data) ? approvedRes.data : [];
 
-        const approved = approvedEvents.length;
-        const total = allEvents.length;
-        const others = total - approved;
-
-        setEventCounts({ approved, others });
+        setEventCounts({
+          approved: approvedEvents.length,
+          others: allEvents.length - approvedEvents.length
+        });
       } catch (error) {
-        console.error('Failed to fetch event stats:', error);
+        console.error('Error fetching event stats:', error);
+        if (error.response?.status === 403) {
+          navigate('/unauthorized');
+        }
+      }
+    };
+
+    const fetchUserCount = async () => {
+      try {
+        const response = await getAllUsers();
+        const users = Array.isArray(response?.data) ? response.data : [];
+        setUserCount(users.length);
+      } catch (error) {
+        console.error('Failed to fetch user count:', error);
+        setUserCount(0);
       } finally {
         setLoading(false);
       }
     };
-    const fetchUserCount = async () => {
-        try {
-          const response = await getAllUsers();
-          const users = Array.isArray(response?.data) ? response.data : [];
-          setUserCount(users.length);
-        } catch (error) {
-          console.error('Failed to fetch user count:', error);
-          setUserCount(0); 
-        } finally {
-          setLoading(false);
-        }
-      };
 
     fetchData();
     fetchUserCount();
   }, []);
 
-  // Draw chart after data loads
+  // Draw Chart
   useEffect(() => {
     if (!loading && chartRef.current) {
       drawPieChart(eventCounts.approved, eventCounts.others);
     }
-  }, [loading, eventCounts]);
+  }, [loading]);
 
   const drawPieChart = (approved, others) => {
     const ctx = document.getElementById('pieChart');
@@ -82,53 +90,45 @@ export default function AdminDashboard() {
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            position: 'bottom'
-          },
-          tooltip: {
-            enabled: true
-          }
+          legend: { position: 'bottom' },
+          tooltip: { enabled: true }
         }
       }
     });
   };
 
+  // Show loader while checking auth or loading data
+  if (loading || !isLoggedIn || user?.role?.toLowerCase() !== 'system admin') {
+    return <Loader text="Verifying admin access..." />;
+  }
+
+  // ✅ All good — render dashboard
   return (
     <div className="centered-dashboard-container">
       <div className="dashboard-wrapper">
-        {loading ? (
-          <p>Loading dashboard...</p>
-        ) : (
-          <>
-            {/* USERS CARD */}
-            <div className="card users-card">
-            <h2>Total Users</h2>
-                {loading ? (
-                    <p>Loading...</p>
-                ) : (
-                    <p className="count">{userCount}</p>
-                )}
-              <button className="view-btn" onClick={() => window.location.href = '/admin-users'}>
-                View All Users
-              </button>
-            </div>
+        {/* USERS CARD */}
+        <div className="card users-card">
+          <h2>Total Users</h2>
+          <p className="count">{userCount}</p>
+          <button className="view-btn" onClick={() => navigate('/admin-users')}>
+            View All Users
+          </button>
+        </div>
 
-            {/* EVENTS PIE CHART CARD */}
-            <div className="card events-card">
-              <h2>Event Status</h2>
-              <div className="pie-chart" ref={chartRef}>
-                <canvas id="pieChart" width="200" height="200"></canvas>
-              </div>
-              <div className="legend">
-                <span><em style={{ backgroundColor: '#10b981' }}></em> Approved ({eventCounts.approved})</span>
-                <span><em style={{ backgroundColor: '#f59e0b' }}></em> Pending / Declined ({eventCounts.others})</span>
-              </div>
-              <button className="view-btn" onClick={() => window.location.href = '/admin/events'}>
-                View All Events
-              </button>
-            </div>
-          </>
-        )}
+        {/* EVENTS PIE CHART CARD */}
+        <div className="card events-card">
+          <h2>Event Status</h2>
+          <div className="pie-chart" ref={chartRef}>
+            <canvas id="pieChart" width="200" height="200"></canvas>
+          </div>
+          <div className="legend">
+            <span><em style={{ backgroundColor: '#10b981' }}></em> Approved ({eventCounts.approved})</span>
+            <span><em style={{ backgroundColor: '#f59e0b' }}></em> Pending / Declined ({eventCounts.others})</span>
+          </div>
+          <button className="view-btn" onClick={() => navigate('/admin/events')}>
+            View All Events
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -100,6 +100,7 @@ input {
 	width: 768px;
 	max-width: 100%;
 	min-height: 480px;
+	margin-top: calc(100vh / 4)
 }
 
 .form-container {
@@ -228,49 +229,3 @@ input {
 	width: 40px;
 }
 
-footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
-}
-
-.Toastify__close-button {
-  top: 50% !important;
-  left: 10px !important;
-  right: auto !important;
-  transform: translateY(50%);
-  transform: translateX(1400%);
-  position: absolute !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  width: 20px; 
-  height: 20px;
-  padding: 0;
-  background: none;
-  border: none;
-  z-index: 2;
-}
-
-.Toastify__toast-body {
-  padding-left: 40px !important;
-}

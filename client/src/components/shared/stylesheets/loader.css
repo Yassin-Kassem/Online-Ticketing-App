@@ -1,0 +1,19 @@
+/* Custom Loader Spinner */
+.custom-loader-spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #007bff; /* Bootstrap primary color */
+    border-top: 5px solid rgba(0, 123, 255, 0.3); /* Lighter top for spin effect */
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
