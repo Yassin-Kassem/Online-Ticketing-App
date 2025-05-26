@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.put('/profile', auth, UpdateProfile);
 router.get("/profile", auth, getProfile);
-router.get("/events/analytics", auth, authoriseOnly(['Organizer']), getUserEvents); // Assuming this is the correct route for user event analytics
+router.get("/events/analytics", auth, authoriseOnly(['Organizer']), userEventAnalytics); // Assuming this is the correct route for user event analytics
 router.get("/", /*auth,*/ /*authoriseOnly(['System Admin']),*/  getAllUsers);
 router.get("/bookings", auth, authoriseOnly(['Standard User']), getUserBookings);
 router.get("/events", auth, authoriseOnly(['Organizer']), getUserEvents);
