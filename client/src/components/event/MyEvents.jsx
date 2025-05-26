@@ -6,8 +6,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom'; // Import Link for routing
 import './events.css';
+import useRequireRole from '../../routes/roleCheck';
 
 const MyEvents = () => {
+  useRequireRole(['Organizer']);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,7 +37,7 @@ const MyEvents = () => {
       alert('Event ID is missing!');
       return;
     }
-    window.location.href = `/edit-event/${eventId}`;
+    window.location.href = `/my-events/${eventId}/edit`;
   };
 
   const handleDelete = async (eventId) => {

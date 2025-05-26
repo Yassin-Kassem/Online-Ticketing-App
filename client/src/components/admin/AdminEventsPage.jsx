@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { getAllEvents, updateStatus } from '../../services/api';
 import { toast } from 'react-toastify';
+import useRequireRole from '../../routes/roleCheck';
 
 const AdminEventsPage = () => {
+    useRequireRole(['System Admin']);
   const { user, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 

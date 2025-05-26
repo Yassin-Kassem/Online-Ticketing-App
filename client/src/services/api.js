@@ -37,8 +37,9 @@ export const getDetailsOfEvent = (id) => api.get(`/events/${id}`);
 export const updateStatus = (id, data) => api.put(`/events/status/${id}`, data);
 export const getUserEvents = () => api.get('/users/events');
 export const deleteEvent = (id) => api.delete(`events/${id}`);
-export const createEvent = () => api.post('/events', data)
+export const createEvent = (data) => api.post('/events', data)
 export const getUserEventAnalytics = (data) => api.get('/users/events/analytics', data);
+export const updateEvent = (id, data) => api.put(`/events/${id}`, data);
 
 // Booking API Methods
 export const createBooking = (data) => api.post('/bookings/', data);

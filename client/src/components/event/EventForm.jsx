@@ -1,121 +1,196 @@
-    import React, { useEffect, useContext, useState } from 'react';
-    import axios from 'axios';
-    import { useNavigate, useParams } from 'react-router-dom';
-    import { AuthContext } from '../../context/AuthContext';
-    import Loader from '../shared/Loader';
-    import './eventForm.css';
-    const EventForm = () => {
-      const navigate = useNavigate();
-      const { id } = useParams();
-      const isEdit = Boolean(id);
+import React, { useState } from 'react';
+import { AuthContext } from '../../context/AuthContext'; // Adjust path as needed
+import { createEvent } from '../../services/api';
+import { toast } from 'react-toastify';
+import useRequireRole from '../../routes/roleCheck';
 
-      // Get auth state
-      const { user, isLoggedIn, loading } = useContext(AuthContext);
+// Styled using inline style tag
+const styles = `
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 420px;
+    min-height: 100vh;
+    background-color: #FFFFFF;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+  }
 
-      // State for form data
-      const [formData, setFormData] = useState({
+  .form-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .form-card h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #333;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-group label {
+    margin-bottom: 0;
+    margin-right: 1rem;
+    font-weight: 600;
+    color: #555;
+    flex-basis: 150px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 600px;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+
+  .error-message {
+    color: red;
+    margin-bottom: 1rem;
+  }
+
+  #description {
+    min-height: 150px;
+    background-color: white;
+  }
+`;
+
+const CreateEventForm = () => {
+  useRequireRole(['Organizer']);
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    date: '',
+    location: '',
+    category: 'concert',
+    ticketPricing: '',
+    totalTicketsAvailable: '',
+    remainingTickets: '',
+  });
+
+  const { user } = React.useContext(AuthContext);
+  const userId = user?.id || user?._id;
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!userId) {
+      setError("You must be logged in to create an event.");
+      return;
+    }
+
+    try {
+      const dataToSend = {
+        ...formData,
+        ticketPricing: parseFloat(formData.ticketPricing),
+        totalTicketsAvailable: parseInt(formData.totalTicketsAvailable, 10),
+        remainingTickets: parseInt(formData.remainingTickets || formData.totalTicketsAvailable, 10),
+        organizer: userId,
+      };
+
+      const response = await createEvent(dataToSend); // Axios POST /api/v1/events
+      console.log('Event created:', response.data);
+
+      // Show success toast
+      toast.success('🎉 Event created successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      // Reset form
+      setFormData({
         title: '',
         description: '',
         date: '',
         location: '',
-        category: '',
+        category: 'concert',
         ticketPricing: '',
         totalTicketsAvailable: '',
+        remainingTickets: '',
       });
+    } catch (err) {
+      console.error('Error creating event:', err.response?.data || err.message);
+      toast.error(`❌ Failed to create event: ${err.message}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
-      // 🔐 Role Check Effect
-      useEffect(() => {
-        if (loading) return; // Don't check while still loading
+  return (
+    <>
+      <style>{styles}</style>
+      <div className="form-container">
+        <div className="form-card">
+          <h2>Create New Event</h2>
 
-        const normalizedRole = user?.role?.toLowerCase();
+          {error && <p className="error-message">{error}</p>}
 
-        if (!isLoggedIn || !user || normalizedRole !== 'organizer') {
-          console.warn('Access denied. Redirecting to /unauthorized', {
-            isLoggedIn,
-            role: user?.role,
-          });
-          navigate('/unauthorized', { replace: true });
-        }
-      }, [isLoggedIn, user, loading]);
-
-      // Fetch event data if editing
-      useEffect(() => {
-        if (!isEdit || loading) return;
-
-        const fetchEvent = async () => {
-          try {
-            const res = await axios.get(`/api/v1/events/${id}`);
-            const formattedDate = new Date(res.data.date).toISOString().slice(0, 16);
-            setFormData({
-              title: res.data.title || '',
-              description: res.data.description || '',
-              date: formattedDate,
-              location: res.data.location || '',
-              category: res.data.category || '',
-              ticketPricing: res.data.ticketPricing?.toString() || '',
-              totalTicketsAvailable: res.data.totalTicketsAvailable?.toString() || '',
-            });
-          } catch (error) {
-            console.error('Error fetching event:', error);
-            alert('Failed to load event data');
-          }
-        };
-
-        fetchEvent();
-      }, [id, isEdit, loading]);
-
-      const handleChange = (e) => {
-        const { name, value, type } = e.target;
-        setFormData((prev) => ({
-          ...prev,
-          [name]: type === 'number' ? value.replace(/^0+/, '') : value,
-        }));
-      };
-
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-          const formattedDate = new Date(formData.date).toISOString();
-          const payload = {
-            title: formData.title,
-            description: formData.description,
-            date: formattedDate,
-            location: formData.location,
-            category: formData.category,
-            ticketPricing: parseFloat(formData.ticketPricing),
-            totalTicketsAvailable: parseInt(formData.totalTicketsAvailable),
-          };
-
-          let response;
-          if (isEdit) {
-            response = await axios.put(`/api/v1/events/${id}`, payload);
-          } else {
-            response = await axios.post('/api/v1/events', payload);
-          }
-
-          if (response.status === 200 || response.status === 201) {
-            navigate('/my-events'); // Or wherever you want to send them after submit
-          }
-        } catch (error) {
-          console.error('Error submitting form:', error);
-          alert(`Error: ${error.response?.data?.message || error.message}`);
-        }
-      };
-
-      // Show loading UI until auth resolves
-      if (loading || !isLoggedIn || user?.role?.toLowerCase() !== 'organizer') {
-        return <Loader text="Verifying access..." />;
-      }
-
-      return (
-        <div className="event-container">
-          <h1>{isEdit ? 'Edit Event' : 'Create New Event'}</h1>
-          <form onSubmit={handleSubmit} className="event-form">
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Title</label>
+              <label htmlFor="title">Title:</label>
               <input
                 type="text"
+                id="title"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
@@ -124,19 +199,21 @@
             </div>
 
             <div className="form-group">
-              <label>Description</label>
+              <label htmlFor="description">Description:</label>
               <textarea
+                id="description"
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
                 required
-              ></textarea>
+              />
             </div>
 
             <div className="form-group">
-              <label>Date</label>
+              <label htmlFor="date">Date and Time:</label>
               <input
                 type="datetime-local"
+                id="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
@@ -145,9 +222,10 @@
             </div>
 
             <div className="form-group">
-              <label>Location</label>
+              <label htmlFor="location">Location:</label>
               <input
                 type="text"
+                id="location"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
@@ -156,9 +234,10 @@
             </div>
 
             <div className="form-group">
-              <label>Category</label>
+              <label htmlFor="category">Category:</label>
               <input
                 type="text"
+                id="category"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
@@ -167,37 +246,49 @@
             </div>
 
             <div className="form-group">
-              <label>Ticket Price ($)</label>
+              <label htmlFor="ticketPricing">Ticket Price ($):</label>
               <input
                 type="number"
+                step="0.01"
+                id="ticketPricing"
                 name="ticketPricing"
                 value={formData.ticketPricing}
                 onChange={handleChange}
                 required
-                min="0"
-                step="0.01"
               />
             </div>
 
             <div className="form-group">
-              <label>Total Tickets Available</label>
+              <label htmlFor="totalTicketsAvailable">Total Tickets Available:</label>
               <input
                 type="number"
+                id="totalTicketsAvailable"
                 name="totalTicketsAvailable"
                 value={formData.totalTicketsAvailable}
                 onChange={handleChange}
                 required
-                min="1"
-                step="1"
               />
             </div>
 
-            <button type="submit" className="animated-button">
-              {isEdit ? 'Update Event' : 'Create Event'}
+            <div className="form-group">
+              <label htmlFor="remainingTickets">Remaining Tickets (optional):</label>
+              <input
+                type="number"
+                id="remainingTickets"
+                name="remainingTickets"
+                value={formData.remainingTickets}
+                onChange={handleChange}
+              />
+            </div>
+
+            <button type="submit" className="submit-button">
+              Create Event
             </button>
           </form>
         </div>
-      );
-    };
+      </div>
+    </>
+  );
+};
 
-    export default EventForm;
+export default CreateEventForm;
