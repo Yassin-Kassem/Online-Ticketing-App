@@ -11,5 +11,5 @@ router.put("/:id", auth , authoriseOnly(["Organizer", "System Admin"]), updateEv
 router.get("/:id",getDetailsOfEvent);
 router.post("/", auth , authoriseOnly(["Organizer"]) ,createEvent);
 router.delete("/:id", auth , authoriseOnly(["Organizer", "System Admin"]), deleteEvent);
-router.put("/status/:id", /*auth, authoriseOnly(["System Admin"]) , */ updateStatus);
+router.put("/status/:id", auth, authoriseOnly(["System Admin"]) , updateStatus);
 module.exports = router;
