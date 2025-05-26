@@ -125,7 +125,7 @@ export default function AdminDashboard() {
             <span><em style={{ backgroundColor: '#10b981' }}></em> Approved ({eventCounts.approved})</span>
             <span><em style={{ backgroundColor: '#f59e0b' }}></em> Pending / Declined ({eventCounts.others})</span>
           </div>
-          <button className="view-btn" onClick={() => navigate('/admin/events')}>
+          <button className="view-btn" onClick={() => navigate('/admin-events')}>
             View All Events
           </button>
         </div>

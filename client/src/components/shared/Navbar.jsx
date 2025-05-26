@@ -46,6 +46,11 @@ const Navbar = () => {
                     <a className="nav-link fw-bold" href="/bookings">My Bookings</a>
                   </li>
                 )}
+                {userRole === "Standard User" && (
+                  <li className="nav-item">
+                    <a className="nav-link fw-bold" href="/events">Upcoming Events</a>
+                  </li>
+                )}
                 {userRole === "Organizer" && (
                   <li className="nav-item">
                     <a className="nav-link fw-bold" href="/my-events">My Events</a>
