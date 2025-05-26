@@ -35,5 +35,9 @@ export const getAllEvents = () => api.get('/events/all');
 export const getApprovedEvents = () => api.get('/events/');
 export const getDetailsOfEvent = (id) => api.get(`/events/${id}`);
 export const updateStatus = (id, data) => api.put(`/events/status/${id}`, data);
+export const getUserEvents = () => api.get('/users/events');
+
+// Booking API Methods
+
 
 export default api;
