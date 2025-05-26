@@ -15,9 +15,11 @@ import EventListPage from './components/event/EventList';
 import EventForm from './components/event/EventForm';
 import Unauthorized from './routes/Unauthorized';
 import MyEvents from './components/event/MyEvents';
-import CreateEvent from './components/event/CreateEvent'
+// import CreateEvent from './components/event/CreateEvent'
 import AdminEventsPage from './components/admin/AdminEventsPage';
 import UserBookingsPage from './components/booking/UserBookingsPage';
+import EventAnalytics from './components/event/EventAnalytics';
+import EditEventForm from './components/event/EditForm';
 
 
 const App = () => {
@@ -37,11 +39,12 @@ const App = () => {
             <Route path="/profile" element={<Profile />} /> 
             <Route path="/events/:id" element={<EventDetailsPage />} />
             <Route path="/events" element={<EventListPage />} />
+            <Route path="/my-events/analytics" element={<EventAnalytics />} />
             <Route path="/create-event" element={<EventForm />} />
             <Route path="/edit-event/:id" element={<EventForm />} />
             <Route path="/unauthorized" element={<Unauthorized/>} />
             <Route path="/my-events" element={<MyEvents />} />
-            <Route path="/create-event" element={<CreateEvent />} />
+            <Route path="/my-events/:id/edit" element={<EditEventForm />} />
             <Route path="/bookings" element={<UserBookingsPage />} />
           </Routes>
         </AuthProvider>

@@ -4,8 +4,7 @@ import './stylesheets/userList.css';
 import useRequireRole from '../../routes/roleCheck';
 
 export default function UsersList() {
-  useRequireRole(['System Admin']); // 🔐 Hook handles auth + redirect
-
+  useRequireRole(['System Admin']); 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingUser, setDeletingUser] = useState(null);
