@@ -36,7 +36,8 @@ export const getApprovedEvents = () => api.get('/events/');
 export const getDetailsOfEvent = (id) => api.get(`/events/${id}`);
 export const updateStatus = (id, data) => api.put(`/events/status/${id}`, data);
 export const getUserEvents = () => api.get('/users/events');
-
+export const deleteEvent = (id) => api.delete(`events/${id}`);
+export const createEvent = () => api.post('/events', data)
 // Booking API Methods
 
 

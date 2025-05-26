@@ -1,0 +1,128 @@
+    @import url('https://fonts.googleapis.com/css?family=Montserrat :400,800');
+
+    /* Container for all events */
+    .event-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+    background-color: #f6f5f7;
+    font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Title at top of page */
+    .event-list-container h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 30px;
+    }
+
+    /* Grid container for event cards */
+    .event-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+    }
+
+    /* Event Card Styling (matches MyEvents and EventForm layout) */
+    .event-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    }
+
+    .event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .event-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    }
+
+    .event-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+
+    .event-card-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    }
+
+    .event-card-desc {
+    font-size: 14px;
+    color: #666;
+    flex-grow: 1;
+    }
+
+    .event-card-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    }
+
+    /* Animated Button Style (shared with other pages) */
+    .animated-button {
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: linear-gradient(45deg, #FF4B2B, #FF6A47);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 20px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    }
+
+    .animated-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: 0.5s ease;
+    }
+
+    .animated-button:hover::before {
+    left: 100%;
+    }
+
+    .animated-button:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    background: linear-gradient(45deg, #e04327, #ff5840);
+    }
+
+    .animated-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(45deg, #d03c22, #e04d37);
+    }
