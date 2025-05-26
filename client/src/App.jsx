@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import EventDetailsPage from './components/event/EventDetails';
 import EventListPage from './components/event/EventList'; 
 import EventForm from './components/event/EventForm';
+import MyEvents from './components/event/MyEvents'; // Import MyEvents component
 
 
 const App = () => {
@@ -33,13 +34,7 @@ const App = () => {
             <Route path="/events" element={<EventListPage />} />
             <Route path="/create-event" element={<EventForm />} />
             <Route path="/edit-event/:id" element={<EventForm />} />
-
-
-            
-             
-            
-            
-          
+            <Route path="/my-events" element={<MyEvents />} />
           </Routes>
         </AuthProvider>
       </Router>
