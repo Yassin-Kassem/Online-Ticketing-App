@@ -15,7 +15,6 @@ import EventListPage from './components/event/EventList';
 import EventForm from './components/event/EventForm';
 import Unauthorized from './routes/Unauthorized';
 import MyEvents from './components/event/MyEvents';
-// import CreateEvent from './components/event/CreateEvent'
 import AdminEventsPage from './components/admin/AdminEventsPage';
 import UserBookingsPage from './components/booking/UserBookingsPage';
 import EventAnalytics from './components/event/EventAnalytics';
