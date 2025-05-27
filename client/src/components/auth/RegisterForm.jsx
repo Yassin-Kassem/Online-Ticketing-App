@@ -18,7 +18,7 @@ const RegisterForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    role: '',
+    role: 'Standard User',
   });
   const [loginFormData, setLoginFormData] = useState({
     email: '',

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { resetPassword } from '../../services/api';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import './stylesheets/ResetPassword.css';
 
 const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState('');
@@ -15,7 +16,7 @@ const ResetPassword = () => {
 
     if (!email) {
         return (
-            <div>
+            <div className="reset-password-container">
                 <p>Error: Email is required to reset password.</p>
                 <button onClick={() => navigate('/forgot-password')}>Go back</button>
             </div>
@@ -43,7 +44,7 @@ const ResetPassword = () => {
     };
 
     return (
-        <div>
+        <div className="reset-password-container">
             <h2>Reset Password</h2>
             <form onSubmit={handleSubmit}>
                 <input
@@ -54,10 +55,9 @@ const ResetPassword = () => {
                     minLength="8"
                     required
                 />
-                <br />
-                <button type="submit">Reset Password</button>
+                <button type="submit" className="reset-btn">Reset Password</button>
             </form>
-            {message && <p>{message}</p>}
+            {message && <p className="message">{message}</p>}
         </div>
     );
 };
