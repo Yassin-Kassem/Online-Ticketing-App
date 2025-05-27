@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import './stylesheets/AdminDashboard.css';
+import './stylesheets/adminDashboard.css';
 import Loader from '../shared/Loader';
 import { useNavigate } from 'react-router-dom';
 import useRequireRole from '../../routes/roleCheck';
